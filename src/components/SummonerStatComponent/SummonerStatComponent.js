@@ -37,7 +37,7 @@ function SummonerStatComponent() {
 
   useEffect(() => {
     getSummonerByName(summonerName).then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {

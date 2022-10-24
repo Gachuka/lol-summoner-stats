@@ -19,7 +19,7 @@ export const getSummonerByName = (summonerName) => {
 // }
 
 export const getMatchHistoryByPUUID = (PUUID) => {
-  return axios.get(`${apiMatchHistoryUrl}${requestMatchByPUUIDlol}${PUUID}/ids?start=0&count=20&${apiKey}`)
+  return axios.get(`${apiMatchHistoryUrl}${requestMatchByPUUIDlol}${PUUID}/ids?start=0&count=50&${apiKey}`)
 }
 
 export const getMatchByMatchId = (MatchId) => {
