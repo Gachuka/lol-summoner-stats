@@ -7,7 +7,11 @@ import SummonerStatComponent from './components/SummonerStatComponent/SummonerSt
 function App() {
   return (
     <div className="App">
-      <SummonerStatComponent />
+      <BrowserRouter>
+        <Routes>
+          <Route path='summoner/:summonerName' element={<SummonerStatComponent/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

@@ -1,0 +1,89 @@
+
+.match-history {
+  &__card {
+    display: flex;
+  }
+}
+.champion-icon {
+  height: 15px;
+}
+
+.teams {
+  display: flex;
+  width: fit-content;
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+  }
+}
+
+.result-time {
+  display: flex;
+}
+
+.played {
+  display: flex;
+  align-items: center;
+}
+
+.champion {
+  position: relative;
+  height: fit-content;
+
+  &__img {
+    height: 60px;
+    width: 60px;
+  }
+
+  &__level {
+    position: absolute;
+    background-color: black;
+    color: white;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.summoner {
+  display: flex;
+  align-items: center;
+  // padding: .1rem;
+
+  &__name {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+.summoner-skill {
+
+  &__img {
+    height: 30px;
+  }
+}
+
+.items {
+  &__row {
+    display: flex;
+  }
+  &__blank {
+    height: 30px;
+    width: 30px;
+  }
+  &__filler {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.item {
+  &__img {
+    height: 30px;
+  }
+  
+  &__filler {
+    opacity: 0;
+  }
+}
