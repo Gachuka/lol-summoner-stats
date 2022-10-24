@@ -41,11 +41,11 @@ function SummonerStatComponent() {
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {
-      console.log(resMatchHistoryByPUUID.data)
+      // console.log(resMatchHistoryByPUUID.data)
       setMatchHistoryData(resMatchHistoryByPUUID.data)
       return getMatchByMatchId(resMatchHistoryByPUUID.data[0])
     }).then((resMatchHistory) => {
-      console.log(resMatchHistory.data)
+      // console.log(resMatchHistory.data)
       setMatchData(resMatchHistory.data)
       setParticipants(resMatchHistory.data.info.participants)
 
@@ -95,10 +95,10 @@ function SummonerStatComponent() {
       outputTime = `${nearestMinute} ${nearestMinute === 1 ? 'minute' : 'minutes'} ago`
     } else if (nearestMinute >= 60 && nearestMinute < 1440) {
       const nearestHour = Math.ceil(((currentTime-gameEndTimestamp)/1000)/3600)
-      outputTime `${nearestHour} ${nearestHour === 1 ? 'hour' : 'hours'} ago`
+      outputTime = `${nearestHour} ${nearestHour === 1 ? 'hour' : 'hours'} ago`
     } else {
       const nearestDay = Math.ceil(((currentTime-gameEndTimestamp)/1000)/86400)
-      outputTime `${nearestDay} ${nearestDay === 1 ? 'day' : 'days'} ago`
+      outputTime = `${nearestDay} ${nearestDay === 1 ? 'day' : 'days'} ago`
     }
     return outputTime
   }
