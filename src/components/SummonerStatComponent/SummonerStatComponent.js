@@ -13,7 +13,8 @@ function SummonerStatComponent() {
   const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ matchData, setMatchData ] = useState()
   const [ participant, setParticipant ] = useState()
-  const [ participants, setParticipants ] = useState([])
+  const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
+  const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
   const [ win, setWin ] = useState()
 
   const summonerSpells = {
@@ -35,6 +36,321 @@ function SummonerStatComponent() {
     55:"Summoner_UltBookSmitePlaceholder"
   }
 
+  const queueType = [
+    {
+      "queueId": 0,
+      "map": "Custom games",
+      "description": null,
+      "notes": null
+    },
+    {
+      "queueId": 72,
+      "map": "Howling Abyss",
+      "description": "1v1 Snowdown Showdown games",
+      "notes": null
+    },
+    {
+      "queueId": 73,
+      "map": "Howling Abyss",
+      "description": "2v2 Snowdown Showdown games",
+      "notes": null
+    },
+    {
+      "queueId": 75,
+      "map": "Summoner's Rift",
+      "description": "6v6 Hexakill games",
+      "notes": null
+    },
+    {
+      "queueId": 76,
+      "map": "Summoner's Rift",
+      "description": "Ultra Rapid Fire games",
+      "notes": null
+    },
+    {
+      "queueId": 78,
+      "map": "Howling Abyss",
+      "description": "One For All: Mirror Mode games",
+      "notes": null
+    },
+    {
+      "queueId": 83,
+      "map": "Summoner's Rift",
+      "description": "Co-op vs AI Ultra Rapid Fire games",
+      "notes": null
+    },
+    {
+      "queueId": 100,
+      "map": "Butcher's Bridge",
+      "description": "5v5 ARAM games",
+      "notes": null
+    },
+    {
+      "queueId": 310,
+      "map": "Summoner's Rift",
+      "description": "Nemesis games",
+      "notes": null
+    },
+    {
+      "queueId": 313,
+      "map": "Summoner's Rift",
+      "description": "Black Market Brawlers games",
+      "notes": null
+    },
+    {
+      "queueId": 317,
+      "map": "Crystal Scar",
+      "description": "Definitely Not Dominion games",
+      "notes": null
+    },
+    {
+      "queueId": 325,
+      "map": "Summoner's Rift",
+      "description": "All Random games",
+      "notes": null
+    },
+    {
+      "queueId": 400,
+      "map": "Summoner's Rift",
+      "description": "5v5 Draft Pick games",
+      "notes": null
+    },
+    {
+      "queueId": 420,
+      "map": "Summoner's Rift",
+      "description": "5v5 Ranked Solo games",
+      "notes": null
+    },
+    {
+      "queueId": 430,
+      "map": "Summoner's Rift",
+      "description": "5v5 Blind Pick games",
+      "notes": null
+    },
+    {
+      "queueId": 440,
+      "map": "Summoner's Rift",
+      "description": "5v5 Ranked Flex games",
+      "notes": null
+    },
+    {
+      "queueId": 450,
+      "map": "Howling Abyss",
+      "description": "5v5 ARAM games",
+      "notes": null
+    },
+    {
+      "queueId": 460,
+      "map": "Twisted Treeline",
+      "description": "3v3 Blind Pick games",
+      "notes": "Deprecated in patch 9.23"
+    },
+    {
+      "queueId": 470,
+      "map": "Twisted Treeline",
+      "description": "3v3 Ranked Flex games",
+      "notes": "Deprecated in patch 9.23"
+    },
+    {
+      "queueId": 600,
+      "map": "Summoner's Rift",
+      "description": "Blood Hunt Assassin games",
+      "notes": null
+    },
+    {
+      "queueId": 610,
+      "map": "Cosmic Ruins",
+      "description": "Dark Star: Singularity games",
+      "notes": null
+    },
+    {
+      "queueId": 700,
+      "map": "Summoner's Rift",
+      "description": "Clash games",
+      "notes": null
+    },
+    {
+      "queueId": 820,
+      "map": "Twisted Treeline",
+      "description": "Co-op vs. AI Beginner Bot games",
+      "notes": null
+    },
+    {
+      "queueId": 830,
+      "map": "Summoner's Rift",
+      "description": "Co-op vs. AI Intro Bot games",
+      "notes": null
+    },
+    {
+      "queueId": 840,
+      "map": "Summoner's Rift",
+      "description": "Co-op vs. AI Beginner Bot games",
+      "notes": null
+    },
+    {
+      "queueId": 850,
+      "map": "Summoner's Rift",
+      "description": "Co-op vs. AI Intermediate Bot games",
+      "notes": null
+    },
+    {
+      "queueId": 900,
+      "map": "Summoner's Rift",
+      "description": "ARURF games",
+      "notes": null
+    },
+    {
+      "queueId": 910,
+      "map": "Crystal Scar",
+      "description": "Ascension games",
+      "notes": null
+    },
+    {
+      "queueId": 920,
+      "map": "Howling Abyss",
+      "description": "Legend of the Poro King games",
+      "notes": null
+    },
+    {
+      "queueId": 940,
+      "map": "Summoner's Rift",
+      "description": "Nexus Siege games",
+      "notes": null
+    },
+    {
+      "queueId": 950,
+      "map": "Summoner's Rift",
+      "description": "Doom Bots Voting games",
+      "notes": null
+    },
+    {
+      "queueId": 960,
+      "map": "Summoner's Rift",
+      "description": "Doom Bots Standard games",
+      "notes": null
+    },
+    {
+      "queueId": 980,
+      "map": "Valoran City Park",
+      "description": "Star Guardian Invasion: Normal games",
+      "notes": null
+    },
+    {
+      "queueId": 990,
+      "map": "Valoran City Park",
+      "description": "Star Guardian Invasion: Onslaught games",
+      "notes": null
+    },
+    {
+      "queueId": 1000,
+      "map": "Overcharge",
+      "description": "PROJECT: Hunters games",
+      "notes": null
+    },
+    {
+      "queueId": 1010,
+      "map": "Summoner's Rift",
+      "description": "Snow ARURF games",
+      "notes": null
+    },
+    {
+      "queueId": 1020,
+      "map": "Summoner's Rift",
+      "description": "One for All games",
+      "notes": null
+    },
+    {
+      "queueId": 1030,
+      "map": "Crash Site",
+      "description": "Odyssey Extraction: Intro games",
+      "notes": null
+    },
+    {
+      "queueId": 1040,
+      "map": "Crash Site",
+      "description": "Odyssey Extraction: Cadet games",
+      "notes": null
+    },
+    {
+      "queueId": 1050,
+      "map": "Crash Site",
+      "description": "Odyssey Extraction: Crewmember games",
+      "notes": null
+    },
+    {
+      "queueId": 1060,
+      "map": "Crash Site",
+      "description": "Odyssey Extraction: Captain games",
+      "notes": null
+    },
+    {
+      "queueId": 1070,
+      "map": "Crash Site",
+      "description": "Odyssey Extraction: Onslaught games",
+      "notes": null
+    },
+    {
+      "queueId": 1090,
+      "map": "Convergence",
+      "description": "Teamfight Tactics games",
+      "notes": null
+    },
+    {
+      "queueId": 1100,
+      "map": "Convergence",
+      "description": "Ranked Teamfight Tactics games",
+      "notes": null
+    },
+    {
+      "queueId": 1110,
+      "map": "Convergence",
+      "description": "Teamfight Tactics Tutorial games",
+      "notes": null
+    },
+    {
+      "queueId": 1111,
+      "map": "Convergence",
+      "description": "Teamfight Tactics test games",
+      "notes": null
+    },
+    {
+      "queueId": 1300,
+      "map": "Nexus Blitz",
+      "description": "Nexus Blitz games",
+      "notes": null
+    },
+    {
+      "queueId": 1400,
+      "map": "Summoner's Rift",
+      "description": "Ultimate Spellbook games",
+      "notes": null
+    },
+    {
+      "queueId": 1900,
+      "map": "Summoner's Rift",
+      "description": "Pick URF games",
+      "notes": null
+    },
+    {
+      "queueId": 2000,
+      "map": "Summoner's Rift",
+      "description": "Tutorial 1",
+      "notes": null
+    },
+    {
+      "queueId": 2010,
+      "map": "Summoner's Rift",
+      "description": "Tutorial 2",
+      "notes": null
+    },
+    {
+      "queueId": 2020,
+      "map": "Summoner's Rift",
+      "description": "Tutorial 3",
+      "notes": null
+    }
+  ]
+
   useEffect(() => {
     getSummonerByName(summonerName).then((res) => {
       // console.log(res.data)
@@ -45,10 +361,22 @@ function SummonerStatComponent() {
       setMatchHistoryData(resMatchHistoryByPUUID.data)
       return getMatchByMatchId(resMatchHistoryByPUUID.data[0])
     }).then((resMatchHistory) => {
-      // console.log(resMatchHistory.data)
+      console.log(resMatchHistory.data)
       setMatchData(resMatchHistory.data)
-      setParticipants(resMatchHistory.data.info.participants)
-
+      const team1 = []
+      const team2 = []
+      for (let i = 0; i < resMatchHistory.data.info.participants.length; i++ ) {
+        if (i < 5) {
+          team1.push(resMatchHistory.data.info.participants[i])
+        } else {
+          team2.push(resMatchHistory.data.info.participants[i])
+        }
+      }
+      setParticipantsTeam1(team1)
+      // console.log(team1)
+      setParticipantsTeam2(team2)
+      // console.log(team2)
+      
       let participantTeamId
 
       for (let i = 0; i < resMatchHistory.data.info.participants.length; i++) {
@@ -103,7 +431,7 @@ function SummonerStatComponent() {
     return outputTime
   }
 
-  if (!summonerData || participants.length === 0 || !participant) {
+  if (!summonerData || participantsTeam1.length === 0 || participantsTeam2.length === 0 || !participant) {
     return (
       <h1>Loading</h1>
     )
@@ -139,27 +467,27 @@ function SummonerStatComponent() {
 
             <div className='items'>
               <div className='items__row'>
-                <div className='items__item item'>
-                  <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`}/>
+                <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item`}>
+                  {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`}/> : ""}
                 </div>
-                <div className='items__item item'>
-                  <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`}/>
+                <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item`}>
+                  {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`}/> : ""}
                 </div>
-                <div className='items__item item'>
-                  <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`}/>
+                <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item`}>
+                  {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`}/> : ""}
                 </div>
-                <div className='items__item item'>
-                  <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`}/>
+                <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item`}>
+                  {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`}/> : ""}
                 </div>
               </div>
               <div className='items__row'>
-                <div className='items__item item'>
-                  <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`}/>
+                <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item`}>
+                  {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`}/> : ""}
                 </div>
-                <div className='items__item item'>
-                  <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`}/>
+                <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item`}>
+                  {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`}/> : ""}
                 </div>
-                <div className={`${participant.item5 === 0 ? "items__blank" : ""} item`}>
+                <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item`}>
                   {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`}/> : ""}
                 </div>
                 <div className='items__filler'>
@@ -170,39 +498,39 @@ function SummonerStatComponent() {
             <div className='teams'>
               <div className='teams__team team'>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[0].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[0].summonerName}</span>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[0].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam1[0].summonerName}</span>
                 </div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[1].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[1].summonerName}</span>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[1].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam1[1].summonerName}</span>
                 </div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[2].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[2].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[2].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam1[2].summonerName}</span></div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[3].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[3].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[3].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam1[3].summonerName}</span></div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[4].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[4].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[4].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam1[4].summonerName}</span></div>
               </div>
               <div className='teams__team team'>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[5].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[5].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[0].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam2[0].summonerName}</span></div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[6].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[6].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[1].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam2[1].summonerName}</span></div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[7].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[7].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[2].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam2[2].summonerName}</span></div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[8].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[8].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[3].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam2[3].summonerName}</span></div>
                 <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participants[9].championName}.png`}></img>
-                  <span className='summoner__name'>{participants[9].summonerName}</span></div>
+                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[4].championName}.png`}></img>
+                  <span className='summoner__name'>{participantsTeam2[4].summonerName}</span></div>
                 </div>
               </div>
             </div>
