@@ -4,6 +4,8 @@ import {getSummonerByName,getSummonerByPUUID,getMatchHistoryByPUUID,getMatchByMa
 import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
+import ParticipantsComponent from '../ParticipantsComponent/ParticipantsComponent'
+
 function SummonerStatComponent() {
 
   const versionNumber = "12.20.1"
@@ -373,7 +375,7 @@ function SummonerStatComponent() {
         }
       }
       setParticipantsTeam1(team1)
-      // console.log(team1)
+      console.log(team1)
       setParticipantsTeam2(team2)
       // console.log(team2)
       
@@ -449,7 +451,7 @@ function SummonerStatComponent() {
               <div className='game__mode'>{matchData.info.gameMode}</div>
               <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
               <div className='game__result-time result-time'>
-                <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Lose"}</div>
+                <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
                 <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>
               </div>
             </div>
@@ -463,6 +465,8 @@ function SummonerStatComponent() {
                 <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner1Id]}.png`}></img>
                 <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner2Id]}.png`}></img>
               </div>
+            </div>
+            
             <div className='stats'></div>
 
             <div className='items'>
@@ -497,48 +501,35 @@ function SummonerStatComponent() {
             
             <div className='teams'>
               <div className='teams__team team'>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[0].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam1[0].summonerName}</span>
-                </div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[1].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam1[1].summonerName}</span>
-                </div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[2].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam1[2].summonerName}</span></div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[3].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam1[3].summonerName}</span></div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam1[4].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam1[4].summonerName}</span></div>
+                {participantsTeam1.map((participant) => {
+                  {console.log(participant.championName)}
+                  return (
+                    <ParticipantsComponent 
+                      key={participant.puuid}
+                      versionNumber={versionNumber}
+                      championName={participant.championName}
+                      summonerName={participant.summonerName}
+                    />
+                  )
+                })}
               </div>
               <div className='teams__team team'>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[0].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam2[0].summonerName}</span></div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[1].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam2[1].summonerName}</span></div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[2].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam2[2].summonerName}</span></div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[3].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam2[3].summonerName}</span></div>
-                <div className='team__summoner summoner'>
-                  <img className='champion-icon' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participantsTeam2[4].championName}.png`}></img>
-                  <span className='summoner__name'>{participantsTeam2[4].summonerName}</span></div>
-                </div>
+                {participantsTeam2.map((participant) => {
+                  {console.log(participant.championName)}
+                  return (
+                    <ParticipantsComponent 
+                      key={participant.puuid}
+                      versionNumber={versionNumber}
+                      championName={participant.championName}
+                      summonerName={participant.summonerName}
+                    />
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   )
 }
