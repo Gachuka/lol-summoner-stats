@@ -452,7 +452,7 @@ function SummonerStatComponent() {
               <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
               <div className='game__result-time result-time'>
                 <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
-                <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>
+                <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>                  
               </div>
             </div>
 
