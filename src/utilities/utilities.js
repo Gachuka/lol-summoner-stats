@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const apiKey = 'api_key=RGAPI-3e558190-db5a-47d1-8b5d-63ca0ebe8ce2'
+const apiKey = 'api_key=RGAPI-0ed05275-9a2b-4352-bbd0-717693d0ca57'
 const apiSummonerUrl = 'https://na1.api.riotgames.com/'
 const apiMatchHistoryUrl = 'https://americas.api.riotgames.com/'
 const requestSummonerBySummonerName = 'lol/summoner/v4/summoners/by-name/'

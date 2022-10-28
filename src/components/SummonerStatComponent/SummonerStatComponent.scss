@@ -65,6 +65,10 @@
 }
 
 .items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   &__row {
     display: flex;
   }

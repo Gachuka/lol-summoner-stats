@@ -375,14 +375,14 @@ function SummonerStatComponent() {
         }
       }
       setParticipantsTeam1(team1)
-      console.log(team1)
+      // console.log(team1)
       setParticipantsTeam2(team2)
       // console.log(team2)
       
       let participantTeamId
 
       for (let i = 0; i < resMatchHistory.data.info.participants.length; i++) {
-        if (resMatchHistory.data.info.participants[i].summonerName === "Gachuka") {
+        if (resMatchHistory.data.info.participants[i].summonerName === summonerName) {
           console.log(resMatchHistory.data.info.participants[i])
           setParticipant(resMatchHistory.data.info.participants[i])
           participantTeamId = resMatchHistory.data.info.participants[i].teamId
