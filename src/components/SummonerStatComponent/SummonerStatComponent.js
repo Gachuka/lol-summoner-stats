@@ -401,7 +401,7 @@ function SummonerStatComponent() {
     }).catch((error) => {
       console.log(error.message)
     })
-  },[])
+  },[summonerName])
 
   const handleRefresh = () => {
     window.location.reload()
