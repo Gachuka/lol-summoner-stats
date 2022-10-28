@@ -4,7 +4,7 @@ const apiKey = 'api_key=RGAPI-0ed05275-9a2b-4352-bbd0-717693d0ca57'
 const apiSummonerUrl = 'https://na1.api.riotgames.com/'
 const apiMatchHistoryUrl = 'https://americas.api.riotgames.com/'
 const requestSummonerBySummonerName = 'lol/summoner/v4/summoners/by-name/'
-const requestSummonerByPUUID = 'lol/summoner/v4/summoners/by-puuid/'
+// const requestSummonerByPUUID = 'lol/summoner/v4/summoners/by-puuid/'
 const requestMatchByPUUIDlol = 'lol/match/v5/matches/by-puuid/'
 const requestMatchByMatchId = 'lol/match/v5/matches/'
 
