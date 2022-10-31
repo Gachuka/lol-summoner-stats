@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
 import ParticipantsComponent from '../ParticipantsComponent/ParticipantsComponent'
+import SearchBarComponent from '../SearchBarComponent/SearchBarComponent'
 
 function SummonerStatComponent() {
 
@@ -442,6 +443,9 @@ function SummonerStatComponent() {
   return (
     <div className='ssc'>
       <div className='ssc__container'>
+        <div className='ssc__search'>
+          <SearchBarComponent />
+        </div>
         <h1>{summonerData['name']}</h1>
         <button onClick={handleRefresh}>Update</button>
 
