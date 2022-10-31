@@ -11,10 +11,15 @@
   &__input {
     height: 1.5rem;
     width: 100%;
-    border: 1px solid black;
+    // background-color: rgba($color: darkblue, $alpha: .3);
+    border: 2px solid darkblue;
     border-radius: 20px;
     outline: none;
     padding: 0 1rem;
+
+    // &::placeholder {
+    //   color: white;
+    // }
   }
   &__icon {
     height: 16px;
@@ -29,4 +34,8 @@
     border-radius: 20px;
     padding: 0 10px;
   }
+}
+
+.input-error {
+  border: 3px solid rgb(170, 0, 0);
 }
