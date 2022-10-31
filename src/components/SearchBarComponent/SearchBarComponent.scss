@@ -1,8 +1,32 @@
 .search {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  &__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 30rem;
+  }
   &__input {
-    height: 1.25rem;
+    height: 1.5rem;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 20px;
+    outline: none;
+    padding: 0 1rem;
+  }
+  &__icon {
+    height: 16px;
   }
   &__button {
-    height: 1.25rem;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.5rem;
+    border-radius: 20px;
+    padding: 0 10px;
   }
 }

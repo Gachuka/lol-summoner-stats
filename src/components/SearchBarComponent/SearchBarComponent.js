@@ -1,5 +1,7 @@
 import './SearchBarComponent.scss'
 
+import searchIcon from '../../assets/icons/search.svg'
+
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -28,8 +30,12 @@ function SearchBarComponent() {
 
   return ( 
     <div className='search'>
-      <input className='search__input' id='search__input' placeholder='Summoner Name' onChange={handleOnChange} value={search}/>
-      <div className='search__button' onClick={handleSubmit}>Find</div>
+      <div className='search__container'>
+        <input className='search__input' id='search__input' placeholder='Summoner Name' onChange={handleOnChange} value={search}/>
+        <div className='search__button' onClick={handleSubmit}>
+          <img className='search__icon' src={searchIcon} alt='search'/>
+        </div>
+      </div>
     </div>
   )
 }
