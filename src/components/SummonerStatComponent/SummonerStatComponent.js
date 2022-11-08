@@ -1,5 +1,10 @@
 import './SummonerStatComponent.scss'
-import {getSummonerByName,getMatchHistoryByPUUID,getMatchByMatchId} from '../../utilities/utilities.js'
+import {
+  getSummonerByName,
+  getMatchHistoryByPUUID,
+  getMatchByMatchId,
+  getQueueIds
+} from '../../utilities/utilities.js'
 
 import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
@@ -18,6 +23,8 @@ function SummonerStatComponent() {
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
   const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
+  const [ queueIds, setQueueIds ] = useState()
+  const [ queueType, setQueueType ] = useState()
   const [ win, setWin ] = useState()
 
   const summonerSpells = {
@@ -355,6 +362,10 @@ function SummonerStatComponent() {
   // ]
 
   useEffect(() => {
+
+
+
+
     getSummonerByName(summonerName).then((res) => {
       // console.log(res.data)
       setSummonerData(res.data)
@@ -399,6 +410,27 @@ function SummonerStatComponent() {
         }
       }
 
+      return getQueueIds()
+    }).then((res) => {
+
+      let queueTypeFound
+      for (let i = 0; i < res.data.length; i++) {
+        if(queueIds[i]["queueId"] === matchData.info.queueId) {
+          queueTypeFound = queueIds[i]["description"]
+        }
+      }
+
+      if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
+      else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
+      else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
+      else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
+      else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
+      else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
+      else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
+      else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
+      else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
+      else setQueueType("Other")
+
     }).catch((error) => {
       console.log(error.message)
     })
@@ -434,7 +466,13 @@ function SummonerStatComponent() {
     return outputTime
   }
 
-  if (!summonerData || participantsTeam1.length === 0 || participantsTeam2.length === 0 || !participant) {
+  if (
+    !summonerData || 
+    participantsTeam1.length === 0 || 
+    participantsTeam2.length === 0 || 
+    !participant || 
+    !queueIds
+    ) {
     return (
       <h1>Loading</h1>
     )
@@ -452,7 +490,8 @@ function SummonerStatComponent() {
         <div className='match-history'>
           <div className='match-history__card'>
             <div className='game'>
-              <div className='game__mode'>{matchData.info.gameMode}</div>
+              {/* <div className='game__mode'>{matchData.info.gameMode}</div> */}
+              <div className='game__mode'>{queueType}</div>
               <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
               <div className='game__result-time result-time'>
                 <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
