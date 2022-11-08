@@ -362,16 +362,26 @@ function SummonerStatComponent() {
   // ]
 
   useEffect(() => {
-
-
-
-
     getSummonerByName(summonerName).then((res) => {
       // console.log(res.data)
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {
-      // console.log(resMatchHistoryByPUUID.data)
+      console.log(resMatchHistoryByPUUID.data)
+
+      const promises = []
+      const matchHistoryDataArray = []
+      for (let i = 0; i < 10; i++) {
+        promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
+          console.log("axios did something")
+          matchHistoryDataArray.push(res.data)
+        }).catch((error) => {console.log(error.message)}))
+      }
+      Promise.all(promises).then(() => {
+        console.log("done")
+        console.log(matchHistoryDataArray)
+      });
+      
       // setMatchHistoryData(resMatchHistoryByPUUID.data)
       return getMatchByMatchId(resMatchHistoryByPUUID.data[0])
     }).then((resMatchHistory) => {
@@ -410,27 +420,26 @@ function SummonerStatComponent() {
         }
       }
 
-      return getQueueIds()
-    }).then((res) => {
-
-      let queueTypeFound
-      for (let i = 0; i < res.data.length; i++) {
-        if(queueIds[i]["queueId"] === matchData.info.queueId) {
-          queueTypeFound = queueIds[i]["description"]
+      getQueueIds().then((res) => {
+        const queueIds = res.data
+        let queueTypeFound
+        for (let i = 0; i < res.data.length; i++) {
+          if(queueIds[i]["queueId"] === resMatchHistory.data.info.queueId) {
+            queueTypeFound = queueIds[i]["description"]
+          }
         }
-      }
-
-      if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
-      else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
-      else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
-      else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
-      else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
-      else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
-      else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
-      else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
-      else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
-      else setQueueType("Other")
-
+  
+        if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
+        else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
+        else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
+        else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
+        else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
+        else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
+        else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
+        else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
+        else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
+        else setQueueType("Other")
+      })
     }).catch((error) => {
       console.log(error.message)
     })
@@ -441,10 +450,10 @@ function SummonerStatComponent() {
   }
 
   const convertTime = (seconds) => {
-    console.log(seconds)
+    // console.log(seconds)
     const mins = Math.floor(seconds/60)
     let secs = 0
-    console.log(('0' + seconds%60))
+    // console.log(('0' + seconds%60))
     if (seconds%60 < 10 ? secs = "0" + seconds%60 : secs = seconds%60)
     return `${mins}:${secs}`
   }
@@ -470,8 +479,7 @@ function SummonerStatComponent() {
     !summonerData || 
     participantsTeam1.length === 0 || 
     participantsTeam2.length === 0 || 
-    !participant || 
-    !queueIds
+    !participant
     ) {
     return (
       <h1>Loading</h1>
