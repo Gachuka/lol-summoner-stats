@@ -20,10 +20,11 @@ function SummonerStatComponent() {
   const [ summonerData, setSummonerData ] = useState()
   // const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ matchData, setMatchData ] = useState()
+  const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
   const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
-  const [ queueIds, setQueueIds ] = useState()
+  // const [ queueIds, setQueueIds ] = useState()
   const [ queueType, setQueueType ] = useState()
   const [ win, setWin ] = useState()
 
@@ -369,10 +370,28 @@ function SummonerStatComponent() {
     }).then((resMatchHistoryByPUUID) => {
       console.log(resMatchHistoryByPUUID.data)
 
+      let MatchHistoryByPUUID = []
+
+      if(!localStorage.getItem("match_history_data")) {
+        localStorage.setItem("match_history_data", JSON.stringify(resMatchHistoryByPUUID.data))
+        setMatchHistoryData(resMatchHistoryByPUUID.data)
+        MatchHistoryByPUUID = resMatchHistoryByPUUID.data
+      } else {
+        setMatchHistoryData(JSON.parse(localStorage.getItem("match_history_data")))
+        MatchHistoryByPUUID = JSON.parse(localStorage.getItem("match_history_data"))
+      }
+
+      console.log(MatchHistoryByPUUID)
+
+      for (let i = 0; i < MatchHistoryByPUUID.length; i++) {
+        console.log(MatchHistoryByPUUID[i])
+      }
+
       const promises = []
       const matchHistoryDataArray = []
       for (let i = 0; i < 10; i++) {
         promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
+          console.log(resMatchHistoryByPUUID.data[i])
           console.log("axios did something")
           matchHistoryDataArray.push(res.data)
         }).catch((error) => {console.log(error.message)}))
