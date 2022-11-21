@@ -55,22 +55,22 @@ function SummonerStatComponent() {
     }).then((resMatchHistoryByPUUID) => {
       console.log(resMatchHistoryByPUUID.data)
 
-      let MatchHistoryByPUUID = []
+      // let MatchHistoryByPUUID = []
 
-      if(!localStorage.getItem("match_history_data")) {
-        localStorage.setItem("match_history_data", JSON.stringify(resMatchHistoryByPUUID.data))
-        setMatchHistoryData(resMatchHistoryByPUUID.data)
-        MatchHistoryByPUUID = resMatchHistoryByPUUID.data
-      } else {
-        setMatchHistoryData(JSON.parse(localStorage.getItem("match_history_data")))
-        MatchHistoryByPUUID = JSON.parse(localStorage.getItem("match_history_data"))
-      }
+      // if(!localStorage.getItem("match_history_data")) {
+      //   localStorage.setItem("match_history_data", JSON.stringify(resMatchHistoryByPUUID.data))
+      //   setMatchHistoryData(resMatchHistoryByPUUID.data)
+      //   MatchHistoryByPUUID = resMatchHistoryByPUUID.data
+      // } else {
+      //   setMatchHistoryData(JSON.parse(localStorage.getItem("match_history_data")))
+      //   MatchHistoryByPUUID = JSON.parse(localStorage.getItem("match_history_data"))
+      // }
 
-      console.log(MatchHistoryByPUUID)
+      // console.log(MatchHistoryByPUUID)
 
-      for (let i = 0; i < MatchHistoryByPUUID.length; i++) {
-        console.log(MatchHistoryByPUUID[i])
-      }
+      // for (let i = 0; i < MatchHistoryByPUUID.length; i++) {
+      //   console.log(MatchHistoryByPUUID[i])
+      // }
 
       const promises = []
       const matchHistoryDataArray = []
@@ -78,7 +78,7 @@ function SummonerStatComponent() {
         promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
           console.log(resMatchHistoryByPUUID.data[i])
           console.log("axios did something")
-          matchHistoryDataArray.push(res.data)
+          matchHistoryDataArray.push(res.data.info)
         }).catch((error) => {console.log(error.message)}))
       }
       Promise.all(promises).then(() => {
@@ -204,6 +204,7 @@ function SummonerStatComponent() {
             <div className='game'>
               {/* <div className='game__mode'>{matchData.info.gameMode}</div> */}
               <div className='game__mode'>{queueType}</div>
+              {/* <div className='game__mode'>{matchType()}</div> */}
               <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
               <div className='game__result-time result-time'>
                 <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
