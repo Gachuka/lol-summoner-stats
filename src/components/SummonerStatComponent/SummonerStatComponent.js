@@ -14,13 +14,13 @@ import SearchBarComponent from '../SearchBarComponent/SearchBarComponent'
 
 function SummonerStatComponent() {
 
-  const versionNumber = "12.20.1"
+  const versionNumber = "12.22.1"
 
   const { summonerName } = useParams()
   const [ summonerData, setSummonerData ] = useState()
   // const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ matchData, setMatchData ] = useState()
-  const [ matchHistoryData, setMatchHistoryData ] = useState()
+  // const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
   const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
@@ -76,8 +76,8 @@ function SummonerStatComponent() {
       const matchHistoryDataArray = []
       for (let i = 0; i < 10; i++) {
         promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
-          console.log(resMatchHistoryByPUUID.data[i])
-          console.log("axios did something")
+          // console.log(resMatchHistoryByPUUID.data[i])
+          // console.log("axios did something")
           matchHistoryDataArray.push(res.data.info)
         }).catch((error) => {console.log(error.message)}))
       }
@@ -111,18 +111,19 @@ function SummonerStatComponent() {
         if (resMatchHistory.data.info.participants[i].summonerName === summonerName) {
           console.log(resMatchHistory.data.info.participants[i])
           setParticipant(resMatchHistory.data.info.participants[i])
+          setWin(resMatchHistory.data.info.participants[i].win)
           participantTeamId = resMatchHistory.data.info.participants[i].teamId
         }
       }
 
-      const teamsDataArray = resMatchHistory.data.info.teams
+      // const teamsDataArray = resMatchHistory.data.info.teams
 
-      for (let i = 0; i < teamsDataArray.length; i++) {
-        if (teamsDataArray[i].teamId === participantTeamId) {
-          // console.log(teamsDataArray[i].win)
-          setWin(teamsDataArray[i].win)
-        }
-      }
+      // for (let i = 0; i < teamsDataArray.length; i++) {
+      //   if (teamsDataArray[i].teamId === participantTeamId) {
+      //     // console.log(teamsDataArray[i].win)
+      //     setWin(teamsDataArray[i].win)
+      //   }
+      // }
 
       getQueueIds().then((res) => {
         const queueIds = res.data
@@ -144,6 +145,27 @@ function SummonerStatComponent() {
         else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
         else setQueueType("Other")
       })
+
+      // gameEndTimestamp
+      // queueId
+      // participants
+        // timePlayed
+        // champLevel
+        // championName
+        // items
+        // skills
+        // summoner1Id
+        // summoner2Id
+        // teamId
+        // win
+
+      // gameDuration or participants.timePlayed
+
+
+
+
+
+
     }).catch((error) => {
       console.log(error.message)
     })
