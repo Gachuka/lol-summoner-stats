@@ -53,6 +53,7 @@ function SummonerStatComponent() {
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {
+      // setMatchHistoryData(resMatchHistoryByPUUID.data)
       // console.log(resMatchHistoryByPUUID.data)
 
       // let MatchHistoryByPUUID = []
@@ -306,7 +307,12 @@ function SummonerStatComponent() {
               </div>
             </div>
           </div>
-          <MatchCard />
+          <MatchCard 
+            matchData={matchData}
+            summonerName={summonerName}
+            // matchHistoryData={matchHistoryData}
+            versionNumber={versionNumber}
+          />
         </div>
       </div>
     </div>

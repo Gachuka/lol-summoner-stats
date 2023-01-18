@@ -1,0 +1,119 @@
+.matchCard {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .25rem;
+}
+
+.card {
+  border: 1px solid black;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+
+  &__container {
+    display: flex;
+    margin: 0 auto;
+    gap: .25rem;
+  }
+}
+
+.game {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// .champion-icon {
+//   height: 15px;
+// }
+
+.teams {
+  display: flex;
+  width: fit-content;
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+  }
+}
+
+.result-time {
+  display: flex;
+}
+
+.played {
+  align-items: center;
+  display: flex;
+  gap: 0.1rem;
+}
+
+.champion {
+  position: relative;
+  height: fit-content;
+  
+  &__img {
+    height: 60px;
+    width: 60px;
+  }
+  
+  &__level {
+    position: absolute;
+    background-color: black;
+    color: white;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.summoner {
+  display: flex;
+  align-items: center;
+  // padding: .1rem;
+
+  &__name {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+.summoner-skill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  &__img {
+    height: 30px;
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  justify-content: center;
+
+  &__row {
+    gap: inherit;
+    display: flex;
+  }
+  &__blank {
+    height: 30px;
+    width: 30px;
+  }
+  &__filler {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.item {
+  &__img {
+    height: 30px;
+  }
+  
+  &__filler {
+    opacity: 0;
+  }
+}
