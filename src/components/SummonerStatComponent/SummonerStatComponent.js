@@ -11,6 +11,7 @@ import {useParams} from 'react-router-dom'
 
 import ParticipantsComponent from '../ParticipantsComponent/ParticipantsComponent'
 import SearchBarComponent from '../SearchBarComponent/SearchBarComponent'
+import MatchCard from '../MatchCard/MatchCard'
 
 function SummonerStatComponent() {
 
@@ -303,6 +304,7 @@ function SummonerStatComponent() {
               </div>
             </div>
           </div>
+          <MatchCard />
         </div>
       </div>
     </div>
