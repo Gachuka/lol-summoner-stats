@@ -104,14 +104,14 @@ function SummonerStatComponent() {
       setParticipantsTeam2(team2)
       // console.log(team2)
       
-      let participantTeamId
+      // let participantTeamId
 
       for (let i = 0; i < resMatchHistory.data.info.participants.length; i++) {
         if (resMatchHistory.data.info.participants[i].summonerName === summonerName) {
           // console.log(resMatchHistory.data.info.participants[i])
           setParticipant(resMatchHistory.data.info.participants[i])
           setWin(resMatchHistory.data.info.participants[i].win)
-          participantTeamId = resMatchHistory.data.info.participants[i].teamId
+          // participantTeamId = resMatchHistory.data.info.participants[i].teamId
         }
       }
 
