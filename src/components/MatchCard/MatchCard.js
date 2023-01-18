@@ -9,6 +9,7 @@ import {
   getMatchByMatchId,
   getQueueIds
 } from '../../utilities/utilities.js'
+import MatchCardLoading from "../MatchCardLoading/MatchCardLoading"
 
 function MatchCard() {
 
@@ -59,7 +60,7 @@ function MatchCard() {
     !queueType
     ) {
     return (
-      <h1>Loading</h1>
+      <MatchCardLoading />
     )
   }
 

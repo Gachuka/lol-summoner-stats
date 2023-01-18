@@ -1,14 +1,31 @@
 
 .match-history {
+  align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: .25rem;
+}
 
-  &__card {
+.card {
+  border: 1px solid black;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+
+  &__container {
     display: flex;
-    border: 1px solid black;
     margin: 0 auto;
+    gap: .25rem;
   }
 }
+
+.game {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .champion-icon {
   height: 15px;
 }
@@ -29,19 +46,20 @@
 }
 
 .played {
-  display: flex;
   align-items: center;
+  display: flex;
+  gap: 0.1rem;
 }
 
 .champion {
   position: relative;
   height: fit-content;
-
+  
   &__img {
     height: 60px;
     width: 60px;
   }
-
+  
   &__level {
     position: absolute;
     background-color: black;
@@ -63,7 +81,9 @@
 }
 
 .summoner-skill {
-
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
   &__img {
     height: 30px;
   }
@@ -72,9 +92,11 @@
 .items {
   display: flex;
   flex-direction: column;
+  gap: 0.1rem;
   justify-content: center;
 
   &__row {
+    gap: inherit;
     display: flex;
   }
   &__blank {

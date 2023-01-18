@@ -222,85 +222,87 @@ function SummonerStatComponent() {
         <button onClick={handleRefresh}>Update</button>
 
         <div className='match-history'>
-          <div className='match-history__card'>
-            <div className='game'>
-              {/* <div className='game__mode'>{matchData.info.gameMode}</div> */}
-              <div className='game__mode'>{queueType}</div>
-              {/* <div className='game__mode'>{matchType()}</div> */}
-              <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
-              <div className='game__result-time result-time'>
-                <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
-                <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>                  
+          <div className='match-history__card card'>
+            <div className='card__container'>
+              <div className='game'>
+                {/* <div className='game__mode'>{matchData.info.gameMode}</div> */}
+                <div className='game__mode'>{queueType}</div>
+                {/* <div className='game__mode'>{matchType()}</div> */}
+                <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
+                <div className='game__result-time result-time'>
+                  <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
+                  <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>                  
+                </div>
               </div>
-            </div>
 
-            <div className='played'>
-              <div className='played__champion champion'>
-                <img className='champion__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participant.championName}.png`} alt={participant.championName}></img>
-                <div className='champion__level'>{participant.champLevel}</div>
+              <div className='played'>
+                <div className='played__champion champion'>
+                  <img className='champion__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participant.championName}.png`} alt={participant.championName}></img>
+                  <div className='champion__level'>{participant.champLevel}</div>
+                </div>
+                <div className='summoner-skill'>
+                  <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner1Id]}.png`} alt={`${(summonerSpells[participant.summoner1Id]).slice(8)}`}></img>
+                  <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner2Id]}.png`} alt={`${(summonerSpells[participant.summoner2Id]).slice(8)}`}></img>
+                </div>
               </div>
-              <div className='summoner-skill'>
-                <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner1Id]}.png`} alt={`${(summonerSpells[participant.summoner1Id]).slice(8)}`}></img>
-                <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner2Id]}.png`} alt={`${(summonerSpells[participant.summoner2Id]).slice(8)}`}></img>
-              </div>
-            </div>
-            
-            <div className='stats'></div>
+              
+              <div className='stats'></div>
 
-            <div className='items'>
-              <div className='items__row'>
-                <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`} alt={`item number ${participant.item0}`}/> : ""}
+              <div className='items'>
+                <div className='items__row'>
+                  <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`} alt={`item number ${participant.item0}`}/> : ""}
+                  </div>
+                  <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`} alt={`item number ${participant.item1}`}/> : ""}
+                  </div>
+                  <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`} alt={`item number ${participant.item2}`}/> : ""}
+                  </div>
+                  <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`} alt={`item number ${participant.item6}`}/> : ""}
+                  </div>
                 </div>
-                <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`} alt={`item number ${participant.item1}`}/> : ""}
-                </div>
-                <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`} alt={`item number ${participant.item2}`}/> : ""}
-                </div>
-                <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`} alt={`item number ${participant.item6}`}/> : ""}
+                <div className='items__row'>
+                  <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`} alt={`item number ${participant.item3}`}/> : ""}
+                  </div>
+                  <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`} alt={`item number ${participant.item4}`}/> : ""}
+                  </div>
+                  <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item`}>
+                    {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`} alt={`item number ${participant.item5}`}/> : ""}
+                  </div>
+                  <div className='items__filler'>
+                  </div>
                 </div>
               </div>
-              <div className='items__row'>
-                <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`} alt={`item number ${participant.item3}`}/> : ""}
+              
+              <div className='teams'>
+                <div className='teams__team team'>
+                  {participantsTeam1.map((participant) => {
+                    return (
+                      <ParticipantsComponent 
+                        key={participant.puuid}
+                        versionNumber={versionNumber}
+                        championName={participant.championName}
+                        summonerName={participant.summonerName}
+                      />
+                    )
+                  })}
                 </div>
-                <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`} alt={`item number ${participant.item4}`}/> : ""}
+                <div className='teams__team team'>
+                  {participantsTeam2.map((participant) => {
+                    return (
+                      <ParticipantsComponent 
+                        key={participant.puuid}
+                        versionNumber={versionNumber}
+                        championName={participant.championName}
+                        summonerName={participant.summonerName}
+                      />
+                    )
+                  })}
                 </div>
-                <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item`}>
-                  {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`} alt={`item number ${participant.item5}`}/> : ""}
-                </div>
-                <div className='items__filler'>
-                </div>
-              </div>
-            </div>
-            
-            <div className='teams'>
-              <div className='teams__team team'>
-                {participantsTeam1.map((participant) => {
-                  return (
-                    <ParticipantsComponent 
-                      key={participant.puuid}
-                      versionNumber={versionNumber}
-                      championName={participant.championName}
-                      summonerName={participant.summonerName}
-                    />
-                  )
-                })}
-              </div>
-              <div className='teams__team team'>
-                {participantsTeam2.map((participant) => {
-                  return (
-                    <ParticipantsComponent 
-                      key={participant.puuid}
-                      versionNumber={versionNumber}
-                      championName={participant.championName}
-                      summonerName={participant.summonerName}
-                    />
-                  )
-                })}
               </div>
             </div>
           </div>
