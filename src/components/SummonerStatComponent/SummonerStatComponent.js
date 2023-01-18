@@ -20,7 +20,7 @@ function SummonerStatComponent() {
   const [ summonerData, setSummonerData ] = useState()
   // const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ matchData, setMatchData ] = useState()
-  const [ matchHistoryData, setMatchHistoryData ] = useState()
+  // const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
   const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
@@ -374,10 +374,10 @@ function SummonerStatComponent() {
 
       if(!localStorage.getItem("match_history_data")) {
         localStorage.setItem("match_history_data", JSON.stringify(resMatchHistoryByPUUID.data))
-        setMatchHistoryData(resMatchHistoryByPUUID.data)
+        // setMatchHistoryData(resMatchHistoryByPUUID.data)
         MatchHistoryByPUUID = resMatchHistoryByPUUID.data
       } else {
-        setMatchHistoryData(JSON.parse(localStorage.getItem("match_history_data")))
+        // setMatchHistoryData(JSON.parse(localStorage.getItem("match_history_data")))
         MatchHistoryByPUUID = JSON.parse(localStorage.getItem("match_history_data"))
       }
 
