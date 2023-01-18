@@ -18,9 +18,8 @@ function SummonerStatComponent() {
 
   const { summonerName } = useParams()
   const [ summonerData, setSummonerData ] = useState()
-  // const [ matchHistoryData, setMatchHistoryData ] = useState()
+  // const [ matchHistoryData, setMatchHistoryData ] = useState([])
   const [ matchData, setMatchData ] = useState()
-  // const [ matchHistoryData, setMatchHistoryData ] = useState()
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
   const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
@@ -53,7 +52,7 @@ function SummonerStatComponent() {
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {
-      console.log(resMatchHistoryByPUUID.data)
+      // console.log(resMatchHistoryByPUUID.data)
 
       // let MatchHistoryByPUUID = []
 
@@ -83,13 +82,13 @@ function SummonerStatComponent() {
       }
       Promise.all(promises).then(() => {
         console.log("done")
-        console.log(matchHistoryDataArray)
+        // console.log(matchHistoryDataArray)
       });
       
       // setMatchHistoryData(resMatchHistoryByPUUID.data)
       return getMatchByMatchId(resMatchHistoryByPUUID.data[0])
     }).then((resMatchHistory) => {
-      console.log(resMatchHistory.data)
+      // console.log(resMatchHistory.data)
       setMatchData(resMatchHistory.data)
       const team1 = []
       const team2 = []
@@ -109,7 +108,7 @@ function SummonerStatComponent() {
 
       for (let i = 0; i < resMatchHistory.data.info.participants.length; i++) {
         if (resMatchHistory.data.info.participants[i].summonerName === summonerName) {
-          console.log(resMatchHistory.data.info.participants[i])
+          // console.log(resMatchHistory.data.info.participants[i])
           setParticipant(resMatchHistory.data.info.participants[i])
           setWin(resMatchHistory.data.info.participants[i].win)
           participantTeamId = resMatchHistory.data.info.participants[i].teamId
