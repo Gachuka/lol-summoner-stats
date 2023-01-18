@@ -20,8 +20,8 @@ function SearchBarComponent() {
   const handleSubmit = () => {
     const searchBar = document.getElementById("search__input")
     if (searchBar.classList.contains('input-error')) searchBar.classList.remove('input-error')
-    console.log(searchBar)
-    console.log(searchBar.value)
+    // console.log(searchBar)
+    // console.log(searchBar.value)
     if (!searchBar.value) {
       searchBar.classList.add('input-error')
       searchBar.focus()
