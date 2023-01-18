@@ -4,15 +4,14 @@ import ParticipantsComponent from "../ParticipantsComponent/ParticipantsComponen
 
 import { useEffect, useState } from "react"
 import {
-  getSummonerByName,
-  getMatchHistoryByPUUID,
-  getMatchByMatchId,
+  // getSummonerByName,
+  // getMatchHistoryByPUUID,
+  // getMatchByMatchId,
   getQueueIds
 } from '../../utilities/utilities.js'
 import MatchCardLoading from "../MatchCardLoading/MatchCardLoading"
 
 function MatchCard({ matchData, summonerName, versionNumber }) {
-  console.log(matchData.info)
   
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
@@ -42,26 +41,21 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   useEffect(() => {
     const team1 = []
     const team2 = []
-    for (let i = 0; i < matchData.info.participants.length; i++ ) {
+
+    for (let i = 0; i < matchData.participants.length; i++ ) {
       if (i < 5) {
-        team1.push(matchData.info.participants[i])
+        team1.push(matchData.participants[i])
       } else {
-        team2.push(matchData.info.participants[i])
+        team2.push(matchData.participants[i])
       }
     }
     setParticipantsTeam1(team1)
-    // console.log(team1)
     setParticipantsTeam2(team2)
-    // console.log(team2)
     
-    // let participantTeamId
-
-    for (let i = 0; i < matchData.info.participants.length; i++) {
-      if (matchData.info.participants[i].summonerName === summonerName) {
-        // console.log(matchData.info.participants[i])
-        setParticipant(matchData.info.participants[i])
-        setWin(matchData.info.participants[i].win)
-        // participantTeamId = matchData.info.participants[i].teamId
+    for (let i = 0; i < matchData.participants.length; i++) {
+      if (matchData.participants[i].summonerName === summonerName) {
+        setParticipant(matchData.participants[i])
+        setWin(matchData.participants[i].win)
       }
     }
 
@@ -69,7 +63,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
       const queueIds = res.data
       let queueTypeFound
       for (let i = 0; i < res.data.length; i++) {
-        if(queueIds[i]["queueId"] === matchData.info.queueId) {
+        if(queueIds[i]["queueId"] === matchData.queueId) {
           queueTypeFound = queueIds[i]["description"]
         }
       }
@@ -85,19 +79,16 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
       else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
       else setQueueType("Other")
     })
-  },[])
+  },[matchData, matchData.queueId, summonerName])
 
   const convertTime = (seconds) => {
-    // console.log(seconds)
     const mins = Math.floor(seconds/60)
     let secs = 0
-    // console.log(('0' + seconds%60))
     if (seconds%60 < 10 ? secs = "0" + seconds%60 : secs = seconds%60)
     return `${mins}:${secs}`
   }
 
   const timeFromNow = (gameEndTimestamp) => {
-    // const currentTime = new Date()
     let outputTime
     const currentTime = Date.now()
     const nearestMinute = Math.ceil(((currentTime-gameEndTimestamp)/1000)/60)
@@ -126,88 +117,84 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   }
 
   return (
-    <div className='matchCard'>
-      <div className='matchCard__card card'>
-        <div className='card__container'>
-          <div className='game'>
-            {/* <div className='game__mode'>{matchData.info.gameMode}</div> */}
-            <div className='game__mode'>{queueType}</div>
-            {/* <div className='game__mode'>{matchType()}</div> */}
-            <div className='game__from-now'>{timeFromNow(matchData.info.gameEndTimestamp)}</div>
-            <div className='game__result-time result-time'>
-              <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
-              <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>                  
-            </div>
+    <div className='matchCard card'>
+      <div className='card__container'>
+        <div className='game'>
+          <div className='game__mode'>{queueType}</div>
+          <div className='game__from-now'>{timeFromNow(matchData.gameEndTimestamp)}</div>
+          <div className='game__result-time result-time'>
+            <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
+            <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>                  
           </div>
+        </div>
 
-          <div className='played'>
-            <div className='played__champion champion'>
-              <img className='champion__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participant.championName}.png`} alt={participant.championName}></img>
-              <div className='champion__level'>{participant.champLevel}</div>
-            </div>
-            <div className='summoner-skill'>
-              <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner1Id]}.png`} alt={`${(summonerSpells[participant.summoner1Id]).slice(8)}`}></img>
-              <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner2Id]}.png`} alt={`${(summonerSpells[participant.summoner2Id]).slice(8)}`}></img>
-            </div>
+        <div className='played'>
+          <div className='played__champion champion'>
+            <img className='champion__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participant.championName}.png`} alt={participant.championName}></img>
+            <div className='champion__level'>{participant.champLevel}</div>
           </div>
-          
-          <div className='stats'></div>
+          <div className='summoner-skill'>
+            <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner1Id]}.png`} alt={`${(summonerSpells[participant.summoner1Id]).slice(8)}`}></img>
+            <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner2Id]}.png`} alt={`${(summonerSpells[participant.summoner2Id]).slice(8)}`}></img>
+          </div>
+        </div>
+        
+        <div className='stats'></div>
 
-          <div className='items'>
-            <div className='items__row'>
-              <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`} alt={`item number ${participant.item0}`}/> : ""}
-              </div>
-              <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`} alt={`item number ${participant.item1}`}/> : ""}
-              </div>
-              <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`} alt={`item number ${participant.item2}`}/> : ""}
-              </div>
-              <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`} alt={`item number ${participant.item6}`}/> : ""}
-              </div>
+        <div className='items'>
+          <div className='items__row'>
+            <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`} alt={`item number ${participant.item0}`}/> : ""}
             </div>
-            <div className='items__row'>
-              <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`} alt={`item number ${participant.item3}`}/> : ""}
-              </div>
-              <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`} alt={`item number ${participant.item4}`}/> : ""}
-              </div>
-              <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item`}>
-                {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`} alt={`item number ${participant.item5}`}/> : ""}
-              </div>
-              <div className='items__filler'>
-              </div>
+            <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`} alt={`item number ${participant.item1}`}/> : ""}
+            </div>
+            <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`} alt={`item number ${participant.item2}`}/> : ""}
+            </div>
+            <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`} alt={`item number ${participant.item6}`}/> : ""}
             </div>
           </div>
-          
-          <div className='teams'>
-            <div className='teams__team team'>
-              {participantsTeam1.map((participant) => {
-                return (
-                  <ParticipantsComponent 
-                    key={participant.puuid}
-                    versionNumber={versionNumber}
-                    championName={participant.championName}
-                    summonerName={participant.summonerName}
-                  />
-                )
-              })}
+          <div className='items__row'>
+            <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`} alt={`item number ${participant.item3}`}/> : ""}
             </div>
-            <div className='teams__team team'>
-              {participantsTeam2.map((participant) => {
-                return (
-                  <ParticipantsComponent 
-                    key={participant.puuid}
-                    versionNumber={versionNumber}
-                    championName={participant.championName}
-                    summonerName={participant.summonerName}
-                  />
-                )
-              })}
+            <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`} alt={`item number ${participant.item4}`}/> : ""}
             </div>
+            <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item`}>
+              {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`} alt={`item number ${participant.item5}`}/> : ""}
+            </div>
+            <div className='items__filler'>
+            </div>
+          </div>
+        </div>
+        
+        <div className='teams'>
+          <div className='teams__team team'>
+            {participantsTeam1.map((participant) => {
+              return (
+                <ParticipantsComponent 
+                  key={participant.puuid}
+                  versionNumber={versionNumber}
+                  championName={participant.championName}
+                  summonerName={participant.summonerName}
+                />
+              )
+            })}
+          </div>
+          <div className='teams__team team'>
+            {participantsTeam2.map((participant) => {
+              return (
+                <ParticipantsComponent 
+                  key={participant.puuid}
+                  versionNumber={versionNumber}
+                  championName={participant.championName}
+                  summonerName={participant.summonerName}
+                />
+              )
+            })}
           </div>
         </div>
       </div>

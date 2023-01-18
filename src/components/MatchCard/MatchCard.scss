@@ -10,6 +10,8 @@
   border: 1px solid black;
   border-radius: 0.75rem;
   padding: 0.5rem 1rem;
+  height: 6rem;
+  width: 37rem;
 
   &__container {
     display: flex;
@@ -23,6 +25,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 7rem;
 }
 
 // .champion-icon {
@@ -42,6 +45,7 @@
 
 .result-time {
   display: flex;
+  gap: 0.375rem;
 }
 
 .played {
@@ -75,6 +79,10 @@
 
   &__name {
     font-size: 12px;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    width: 11ch;
     white-space: nowrap;
   }
 }
