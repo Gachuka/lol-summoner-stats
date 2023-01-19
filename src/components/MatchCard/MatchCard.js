@@ -3,31 +3,17 @@ import "./MatchCard.scss"
 import MatchCardLoading from "../MatchCardLoading/MatchCardLoading"
 import ParticipantsComponent from "../ParticipantsComponent/ParticipantsComponent"
 
-
 import { useEffect, useState } from "react"
-// import {
-//   // getSummonerByName,
-//   // getMatchHistoryByPUUID,
-//   // getMatchByMatchId,
-//   getQueueIds
-// } from '../../utilities/utilities.js'
 
 const queueIdData = require('../../data/queue-id-data.json')
 
 function MatchCard({ matchData, summonerName, versionNumber }) {
-
-  // console.log(matchData)
-  // console.log(typeof summonerName)
-  // console.log(summonerName)
-  // console.log(queueIdData)
   
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
   const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
   const [ queueType, setQueueType ] = useState()
   const [ win, setWin ] = useState()
-
-  // console.log(matchData)
 
   const summonerSpells = {
     21:"SummonerBarrier",
@@ -64,9 +50,6 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     setParticipantsTeam1(team1)
     setParticipantsTeam2(team2)
 
-    // console.log(matchData.participants)
-    // console.log("Summoner Name: ", summonerName.toLowerCase())
-    
     for (let i = 0; i < matchData.participants.length; i++) {
       if (matchData.participants[i].summonerName.toLowerCase() === summonerName.toLowerCase()) {
         console.log("found name", matchData.participants[i].summonerName)
