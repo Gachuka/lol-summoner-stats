@@ -19,6 +19,8 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   const [ queueType, setQueueType ] = useState()
   const [ win, setWin ] = useState()
 
+  console.log(matchData)
+
   const summonerSpells = {
     21:"SummonerBarrier",
     1:"SummonerBoost",
@@ -37,8 +39,10 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     54:"Summoner_UltBookPlaceholder",
     55:"Summoner_UltBookSmitePlaceholder"
   }
-
+  
   useEffect(() => {
+    
+    if (!matchData) return
     const team1 = []
     const team2 = []
 
@@ -79,7 +83,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
       else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
       else setQueueType("Other")
     })
-  },[matchData, matchData.queueId, summonerName])
+  },[matchData, summonerName])
 
   const convertTime = (seconds) => {
     const mins = Math.floor(seconds/60)
@@ -105,6 +109,8 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   }
 
   if (
+    !summonerName ||
+    matchData === undefined ||
     participantsTeam1.length === 0 || 
     participantsTeam2.length === 0 || 
     !participant ||
