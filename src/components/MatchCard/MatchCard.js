@@ -64,11 +64,11 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     setParticipantsTeam1(team1)
     setParticipantsTeam2(team2)
 
-    console.log(matchData.participants)
-    console.log("Summoner Name: ", summonerName.toLowerCase())
+    // console.log(matchData.participants)
+    // console.log("Summoner Name: ", summonerName.toLowerCase())
     
     for (let i = 0; i < matchData.participants.length; i++) {
-      if (matchData.participants[i].summonerName === summonerName) {
+      if (matchData.participants[i].summonerName.toLowerCase() === summonerName.toLowerCase()) {
         console.log("found name", matchData.participants[i].summonerName)
         setParticipant(matchData.participants[i])
         setWin(matchData.participants[i].win)

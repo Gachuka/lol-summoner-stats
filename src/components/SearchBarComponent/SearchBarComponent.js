@@ -30,6 +30,7 @@ function SearchBarComponent() {
     }
     console.log(search)
     navigate(`/summoner/${search}`)
+    window.location.reload()
   }
 
   if (document.getElementById("search__input") && document.querySelector(".search__button")) {
@@ -43,7 +44,14 @@ function SearchBarComponent() {
   return ( 
     <div className='search'>
       <div className='search__container'>
-        <input className='search__input' id='search__input' placeholder='Summoner Name' onChange={handleOnChange} value={search}/>
+        <input 
+          className='search__input' 
+          id='search__input' 
+          placeholder='Summoner Name' 
+          autoComplete='off'
+          onChange={handleOnChange} 
+          value={search}
+        />
         <div className='search__button' onClick={handleSubmit}>
           <img className='search__icon' src={searchIcon} alt='search'/>
         </div>
