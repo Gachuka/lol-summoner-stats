@@ -11,6 +11,7 @@ const requestMatchByMatchId = 'lol/match/v5/matches/'
 
 
 export const getSummonerByName = (summonerName) => {
+  console.log("getting by name")
   return axios.get(`${apiSummonerUrl}${requestSummonerBySummonerName}${summonerName}?api_key=${API_KEY}`)
 }
 
@@ -20,14 +21,17 @@ export const getSummonerByName = (summonerName) => {
 // }
 
 export const getMatchHistoryByPUUID = (PUUID) => {
+  console.log("getting by puuid")
   return axios.get(`${apiMatchHistoryUrl}${requestMatchByPUUIDlol}${PUUID}/ids?start=0&count=50&api_key=${API_KEY}`)
 }
 
 export const getMatchByMatchId = (MatchId) => {
+  console.log("getting by match id")
   return axios.get(`${apiMatchHistoryUrl}${requestMatchByMatchId}${MatchId}?api_key=${API_KEY}`)
 }
 
 export const getQueueIds = () => {
+  console.log("getting queue id")
   return axios.get(`https://static.developer.riotgames.com/docs/lol/queues.json`)
 }
 

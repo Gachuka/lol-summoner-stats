@@ -19,7 +19,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   const [ queueType, setQueueType ] = useState()
   const [ win, setWin ] = useState()
 
-  console.log(matchData)
+  // console.log(matchData)
 
   const summonerSpells = {
     21:"SummonerBarrier",
