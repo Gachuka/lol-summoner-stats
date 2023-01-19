@@ -66,10 +66,14 @@ function SummonerStatComponent() {
         </nav>
         <div className='background__section'>
           <div className='background__container'>
-
+            <img
+              className='background__image'
+              src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Samira_1.jpg`}
+              alt="background recent most used champ"
+            />
           </div>
           <div className='background__gradiant'>
-
+            <div className='background__gradiant-filter'></div>
           </div>
         </div>
         <div className='ssc__profile profile'>
