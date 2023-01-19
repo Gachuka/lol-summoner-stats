@@ -17,7 +17,8 @@ function SearchBarComponent() {
     setSearch(event.target.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    // e.preventDefault()
     const searchBar = document.getElementById("search__input")
     if (searchBar.classList.contains('input-error')) searchBar.classList.remove('input-error')
     // console.log(searchBar)
@@ -27,6 +28,7 @@ function SearchBarComponent() {
       searchBar.focus()
       return
     }
+    console.log(search)
     navigate(`/summoner/${search}`)
   }
 

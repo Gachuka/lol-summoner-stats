@@ -1,17 +1,25 @@
 import "./MatchCard.scss"
 
+import MatchCardLoading from "../MatchCardLoading/MatchCardLoading"
 import ParticipantsComponent from "../ParticipantsComponent/ParticipantsComponent"
 
+
 import { useEffect, useState } from "react"
-import {
-  // getSummonerByName,
-  // getMatchHistoryByPUUID,
-  // getMatchByMatchId,
-  getQueueIds
-} from '../../utilities/utilities.js'
-import MatchCardLoading from "../MatchCardLoading/MatchCardLoading"
+// import {
+//   // getSummonerByName,
+//   // getMatchHistoryByPUUID,
+//   // getMatchByMatchId,
+//   getQueueIds
+// } from '../../utilities/utilities.js'
+
+const queueIdData = require('../../data/queue-id-data.json')
 
 function MatchCard({ matchData, summonerName, versionNumber }) {
+
+  // console.log(matchData)
+  // console.log(typeof summonerName)
+  // console.log(summonerName)
+  // console.log(queueIdData)
   
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
@@ -41,7 +49,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   }
   
   useEffect(() => {
-    
+
     if (!matchData) return
     const team1 = []
     const team2 = []
@@ -55,34 +63,58 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     }
     setParticipantsTeam1(team1)
     setParticipantsTeam2(team2)
+
+    console.log(matchData.participants)
+    console.log("Summoner Name: ", summonerName.toLowerCase())
     
     for (let i = 0; i < matchData.participants.length; i++) {
       if (matchData.participants[i].summonerName === summonerName) {
+        console.log("found name", matchData.participants[i].summonerName)
         setParticipant(matchData.participants[i])
         setWin(matchData.participants[i].win)
+        break
       }
     }
 
-    getQueueIds().then((res) => {
-      const queueIds = res.data
-      let queueTypeFound
-      for (let i = 0; i < res.data.length; i++) {
-        if(queueIds[i]["queueId"] === matchData.queueId) {
-          queueTypeFound = queueIds[i]["description"]
-        }
-      }
+    // getQueueIds().then((res) => {
+    //   const queueIds = res.data
+    //   let queueTypeFound
+    //   for (let i = 0; i < res.data.length; i++) {
+    //     if(queueIds[i]["queueId"] === matchData.queueId) {
+    //       queueTypeFound = queueIds[i]["description"]
+    //     }
+    //   }
 
-      if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
-      else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
-      else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
-      else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
-      else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
-      else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
-      else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
-      else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
-      else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
-      else setQueueType("Other")
-    })
+    //   if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
+    //   else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
+    //   else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
+    //   else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
+    //   else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
+    //   else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
+    //   else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
+    //   else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
+    //   else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
+    //   else setQueueType("Other")
+    // })
+    
+    let queueTypeFound
+    for (let i = 0; i < queueIdData.length; i++) {
+      if(queueIdData[i]["queueId"] === matchData.queueId) {
+        queueTypeFound = queueIdData[i]["description"]
+      }
+    }
+
+    if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
+    else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
+    else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
+    else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
+    else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
+    else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
+    else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
+    else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
+    else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
+    else setQueueType("Other")
+  
   },[matchData, summonerName])
 
   const convertTime = (seconds) => {
@@ -117,6 +149,15 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     !versionNumber ||
     !queueType
     ) {
+
+    if (!summonerName) console.log("missing summoner name")
+    if (matchData === undefined) console.log("missing match data")
+    if (participantsTeam1.length === 0) console.log("missing participant team 1")
+    if (participantsTeam2.length === 0) console.log("missing participant team 2")
+    if (!participant) console.log("missing participant")
+    if (!versionNumber) console.log("missing version number")
+    if (!queueType) console.log("missing queue type")
+
     return (
       <MatchCardLoading />
     )
