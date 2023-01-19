@@ -52,7 +52,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
 
     for (let i = 0; i < matchData.participants.length; i++) {
       if (matchData.participants[i].summonerName.toLowerCase() === summonerName.toLowerCase()) {
-        console.log("found name", matchData.participants[i].summonerName)
+        // console.log("found name", matchData.participants[i].summonerName)
         setParticipant(matchData.participants[i])
         setWin(matchData.participants[i].win)
         break
@@ -133,13 +133,14 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     !queueType
     ) {
 
-    if (!summonerName) console.log("missing summoner name")
-    if (matchData === undefined) console.log("missing match data")
-    if (participantsTeam1.length === 0) console.log("missing participant team 1")
-    if (participantsTeam2.length === 0) console.log("missing participant team 2")
-    if (!participant) console.log("missing participant")
-    if (!versionNumber) console.log("missing version number")
-    if (!queueType) console.log("missing queue type")
+    // USED TO CHECK WHAT IS MISSING
+    // if (!summonerName) console.log("missing summoner name")
+    // if (matchData === undefined) console.log("missing match data")
+    // if (participantsTeam1.length === 0) console.log("missing participant team 1")
+    // if (participantsTeam2.length === 0) console.log("missing participant team 2")
+    // if (!participant) console.log("missing participant")
+    // if (!versionNumber) console.log("missing version number")
+    // if (!queueType) console.log("missing queue type")
 
     return (
       <MatchCardLoading />
