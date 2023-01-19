@@ -59,15 +59,36 @@ function SummonerStatComponent() {
   }
 
   return (
-    <div className='ssc'>
+    <section className='ssc'>
       <div className='ssc__container'>
-        <div className='ssc__search'>
+        <nav className='navbar'>
           <SearchBarComponent />
+        </nav>
+        <div className='background__section'>
+          <div className='background__container'>
+
+          </div>
+          <div className='background__gradiant'>
+
+          </div>
         </div>
-        <h1>{summonerData['name']}</h1>
-
-        <button onClick={handleRefresh}>Update</button>
-
+        <div className='ssc__profile profile'>
+          <div className='profile__container'>
+            <div className='profile__level'>{summonerData.summonerLevel}</div>
+            <div className="profile__icon icon">
+              <div className='icon__notch'></div>
+              <img 
+                className='icon__image'
+                src={`https://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/profileicon/3379.png`}
+                alt="profile icon" 
+              />
+            </div>
+          </div>
+          <div className='profile__info info'>
+            <span className='info__name'>{summonerData['name']}</span>
+          </div>
+        </div>
+        <button className='info__button' onClick={handleRefresh}>Update</button>
         <div className='match-history'>
           {matchHistoryList.map((match) => {
             return (
@@ -81,7 +102,7 @@ function SummonerStatComponent() {
           })}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
