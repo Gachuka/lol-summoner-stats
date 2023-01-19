@@ -13,7 +13,7 @@ import MatchCard from '../MatchCard/MatchCard'
 
 function SummonerStatComponent() {
 
-  const versionNumber = "12.22.1"
+  const versionNumber = "13.1.1"
 
   const { summonerName } = useParams()
   const [ summonerData, setSummonerData ] = useState()
@@ -21,27 +21,10 @@ function SummonerStatComponent() {
 
   useEffect(() => {
     getSummonerByName(summonerName).then((res) => {
-      // console.log(res.data)
+      console.log(res.data)
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {
-
-      // let MatchHistoryByPUUID = []
-
-      // if(!localStorage.getItem("match_history_data")) {
-      //   localStorage.setItem("match_history_data", JSON.stringify(resMatchHistoryByPUUID.data))
-      //   setMatchHistoryData(resMatchHistoryByPUUID.data)
-      //   MatchHistoryByPUUID = resMatchHistoryByPUUID.data
-      // } else {
-      //   setMatchHistoryData(JSON.parse(localStorage.getItem("match_history_data")))
-      //   MatchHistoryByPUUID = JSON.parse(localStorage.getItem("match_history_data"))
-      // }
-
-      // console.log(MatchHistoryByPUUID)
-
-      // for (let i = 0; i < MatchHistoryByPUUID.length; i++) {
-      //   console.log(MatchHistoryByPUUID[i])
-      // }
 
       const promises = []
       const matchHistoryDataArray = []
