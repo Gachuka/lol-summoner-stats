@@ -148,14 +148,14 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
   }
 
   return (
-    <div className='matchCard card'>
+    <div className={`matchCard card ${win ? "matchCard--win" : "matchCard--lose"}`}>
       <div className='card__container'>
         <div className='game'>
           <div className='game__mode'>{queueType}</div>
           <div className='game__from-now'>{timeFromNow(matchData.gameEndTimestamp)}</div>
-          <div className='game__result-time result-time'>
-            <div className={`result-time__result ${win ? "win" : "lose"}`}>{win ? "Win" : "Loss"}</div>
-            <div className='result-time__time'>{convertTime(participant.timePlayed)}</div>                  
+          <div className='game__result result'>
+            <div className={`result__status ${win ? "result__status-win" : "result__status-lose"}`}>{win ? "Win" : "Loss"}</div>
+            <div className='result__time'>{convertTime(participant.timePlayed)}</div>                  
           </div>
         </div>
 
@@ -203,26 +203,30 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
         </div>
         
         <div className='teams'>
-          <div className='teams__team team'>
+          <div className='teams__team'>
             {participantsTeam1.map((participant) => {
               return (
                 <ParticipantsComponent 
-                  key={participant.puuid}
-                  versionNumber={versionNumber}
                   championName={participant.championName}
-                  summonerName={participant.summonerName}
+                  key={participant.puuid}
+                  participantName={participant.summonerName}
+                  summonerName={summonerName}
+                  versionNumber={versionNumber}
+                  win={win}
                 />
               )
             })}
           </div>
-          <div className='teams__team team'>
+          <div className='teams__team'>
             {participantsTeam2.map((participant) => {
               return (
                 <ParticipantsComponent 
-                  key={participant.puuid}
-                  versionNumber={versionNumber}
                   championName={participant.championName}
-                  summonerName={participant.summonerName}
+                  key={participant.puuid}
+                  participantName={participant.summonerName}
+                  summonerName={summonerName}
+                  versionNumber={versionNumber}
+                  win={win}
                 />
               )
             })}

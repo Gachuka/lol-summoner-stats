@@ -1,5 +1,13 @@
 :root {
-  --main-bg-color: #070720;
+  --background-main: #070720;
+  --background-alt: #17173e;
+  --border-color-main: #414165;
+  --font-color-main: #fff;
+  --font-color-alt: #bbbedb;
+  --lose-color-main: #ff4e50;
+  --lost-color-faded: rgba(255, 78, 81, 0.16);
+  --win-color-main: #3273fa;
+  --win-color-faded: rgba(50, 113, 250, 0.16);
 }
 
 *, *::after, *::before {
@@ -24,7 +32,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--main-bg-color);
+  background-color: var(--background-main);
 }
 
 code {

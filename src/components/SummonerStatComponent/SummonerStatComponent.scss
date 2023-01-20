@@ -3,6 +3,8 @@
 }
 
 .ssc {
+  color: var(--font-color-main);
+  
   &__container {
     position: relative;
     padding: 1rem;
@@ -22,8 +24,8 @@
     width: 94px;
     height: 94px;
     border-radius: 6px;
-    border: 2px solid #414165;
-    background-color: #17172e;
+    border: 2px solid var(--border-color-main);
+    background-color: var(--background-alt);
   }
   &__level {
     position: absolute;
