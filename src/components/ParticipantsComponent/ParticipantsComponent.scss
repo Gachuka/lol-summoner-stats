@@ -38,4 +38,8 @@
     border: 1px solid var(--win-color-main);
     border-radius: 50%;
   }
+  &-lose {
+    border: 1px solid var(--lose-color-main);
+    border-radius: 50%;
+  }
 }
