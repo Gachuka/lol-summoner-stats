@@ -9,7 +9,7 @@
     overflow: hidden;
     text-align: start;
     text-overflow: ellipsis;
-    width: 12ch;
+    max-width: 90px;
     white-space: nowrap;
 
     &--player {

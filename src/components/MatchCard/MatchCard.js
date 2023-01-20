@@ -190,7 +190,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
         </div>
         
         <div className='stats'>
-          <div>{participant.kills} / {participant.deaths} / {participant.assists}</div>
+          <div className="stats__kda-total">{participant.kills} / <span className="stats__kda-total--red">{participant.deaths}</span> / {participant.assists}</div>
           <div>{kdaRatio()} KDA</div>
           <div>{participant.totalMinionsKilled} CS ({csPerMin(participant.timePlayed)})</div>
           <div>{participant.visionScore} vision</div>
