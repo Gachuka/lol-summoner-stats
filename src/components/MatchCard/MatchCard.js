@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"
 const queueIdData = require('../../data/queue-id-data.json')
 
 function MatchCard({ matchData, summonerName, versionNumber }) {
+
+  // console.log(matchData)
   
   const [ participant, setParticipant ] = useState()
   const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
@@ -52,7 +54,7 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
 
     for (let i = 0; i < matchData.participants.length; i++) {
       if (matchData.participants[i].summonerName.toLowerCase() === summonerName.toLowerCase()) {
-        // console.log("found name", matchData.participants[i].summonerName)
+        console.log(matchData.participants[i])
         setParticipant(matchData.participants[i])
         setWin(matchData.participants[i].win)
         break
@@ -123,6 +125,23 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
     return outputTime
   }
 
+  const kdaRatio = () => {
+    const kills = participant.kills
+    const deaths = participant.deaths
+    const assists = participant.assists
+    return roundNumber(((kills + assists) / deaths), 2).toFixed(2)
+  }
+
+  const roundNumber = (value, precision) => {
+    let multiplier = Math.pow(10, precision || 0)
+    return Math.round(value * multiplier) / multiplier
+  }
+
+  const csPerMin = () => {
+    const mins = Math.floor(participant.timePlayed/60)
+    return roundNumber((participant.totalMinionsKilled / mins), 1)
+  }
+
   if (
     !summonerName ||
     matchData === undefined ||
@@ -170,7 +189,12 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
           </div>
         </div>
         
-        <div className='stats'></div>
+        <div className='stats'>
+          <div>{participant.kills} / {participant.deaths} / {participant.assists}</div>
+          <div>{kdaRatio()} KDA</div>
+          <div>{participant.totalMinionsKilled} CS ({csPerMin(participant.timePlayed)})</div>
+          <div>{participant.visionScore} vision</div>
+        </div>
 
         <div className='items'>
           <div className='items__row'>
