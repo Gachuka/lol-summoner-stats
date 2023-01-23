@@ -2,20 +2,21 @@
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  
   &__container {
     position: relative;
     display: flex;
     align-items: center;
-    width: 30rem;
+    width: 90vw;
+    max-width: 30rem;
   }
   &__input {
-    height: 1.5rem;
+    height: 2.5rem;
     width: 100%;
-    // background-color: rgba($color: darkblue, $alpha: .3);
     border: 2px solid darkblue;
     border-radius: 20px;
     outline: none;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 
     // &::placeholder {
     //   color: white;
@@ -33,6 +34,7 @@
     height: 1.5rem;
     border-radius: 20px;
     padding: 0 10px;
+    margin-right: 0.5rem;
   }
 }
 

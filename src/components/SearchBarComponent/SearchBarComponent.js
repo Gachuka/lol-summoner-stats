@@ -47,7 +47,7 @@ function SearchBarComponent() {
         <input 
           className='search__input' 
           id='search__input' 
-          placeholder='Summoner Name' 
+          placeholder='Search Yourself or Another Summoner' 
           autoComplete='off'
           onChange={handleOnChange} 
           value={search}
