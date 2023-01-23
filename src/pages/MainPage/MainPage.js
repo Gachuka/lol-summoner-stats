@@ -10,17 +10,17 @@ function MainPage() {
     <div className='main'>
       <div className='main__container'>
 
-        <div className='background'>
-          <div className='background__section'>
-            <div className='background__container'>
+        <div className='main-background'>
+          <div className='main-background__section'>
+            <div className='main-background__container'>
               <img
-                className='background__image'
+                className='main-background__image'
                 src={MainBackground}
-                alt="background recent most used champ"
+                alt="main-background recent most used champ"
               />
             </div>
-            <div className='background__gradiant'>
-              <div className='background__gradiant-filter'></div>
+            <div className='main-background__gradiant'>
+              <div className='main-background__gradiant-filter'></div>
             </div>
           </div>
         </div>
