@@ -63,9 +63,7 @@ function SummonerStatComponent() {
     <section className='ssc'>
       <div className='ssc__container'>
 
-        <nav className='navbar'>
-          <SearchBarComponent />
-        </nav>
+        <SearchBarComponent />
 
         {/* <div className='background'>
           <div className='background__section'>
