@@ -1,8 +1,21 @@
 .main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &__header {
+    color: var(--font-color-main);
+    user-select: none;
+  }
+
+  &__header span {
+    color: var(--win-color-main);
+  }
 
 }
