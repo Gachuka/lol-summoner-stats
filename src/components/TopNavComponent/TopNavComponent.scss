@@ -1,7 +1,7 @@
 @use "../../styles/partials/breakpoints" as *;
 
 .navbar {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   top: 0px;
@@ -10,6 +10,7 @@
   background-color: var(--background-main);
   border-bottom: 1px solid var(--button-background);
   padding: 1rem 2rem;
+  z-index: 3;
   
   @include pretablet {
     height: 60px;

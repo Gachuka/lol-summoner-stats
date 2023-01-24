@@ -97,14 +97,13 @@
 
 .ssc {
   color: var(--font-color-main);
-  
   &__container {
     display: flex;
     flex-direction: column;
     padding: 2rem 1rem;
     position: relative;
     margin-top: 113px;
-
+    
     @include pretablet {
       margin-top: 60px;
     }
