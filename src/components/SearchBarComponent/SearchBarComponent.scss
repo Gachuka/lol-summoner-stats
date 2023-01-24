@@ -1,8 +1,4 @@
 .search {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  
   &__container {
     position: relative;
     display: flex;
@@ -17,10 +13,6 @@
     border-radius: 20px;
     outline: none;
     padding: 0 1.5rem;
-
-    // &::placeholder {
-    //   color: white;
-    // }
   }
   &__icon {
     height: 16px;

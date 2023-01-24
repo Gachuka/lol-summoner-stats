@@ -9,8 +9,8 @@ import TopNavComponent from './components/TopNavComponent/TopNavComponent';
 function App() {
   return (
     <div className="App">
-      <TopNavComponent />
       <BrowserRouter>
+      <TopNavComponent />
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='summoner/:summonerName' element={<SummonerStatComponent/>} />
