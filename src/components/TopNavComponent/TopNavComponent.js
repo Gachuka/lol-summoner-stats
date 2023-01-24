@@ -18,10 +18,8 @@ function TopNavComponent() {
     <nav className='navbar'>
       <div className='navbar__container'>
         <div className='navbar__logo' onClick={handleLogoCLick}><span>10</span>Latest</div>
-        <div></div>
-        <div className='navbar__search-bar'>
-          {isSummonerPage && <SearchBarComponent />}
-        </div>
+        {isSummonerPage && <div className='navbar__spacer'></div>}
+        {isSummonerPage && <div className='navbar__search-bar'><SearchBarComponent /></div>}
       </div>
     </nav>
   )
