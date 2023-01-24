@@ -11,8 +11,6 @@ function SearchBarComponent() {
   const navigate = useNavigate()
   const [ search, setSearch ] = useState('')
 
-  // const searchBar = document.getElementById("search__input")
-
   const handleOnChange = (event) => {
     setSearch(event.target.value)
   }
@@ -21,8 +19,6 @@ function SearchBarComponent() {
     // e.preventDefault()
     const searchBar = document.getElementById("search__input")
     if (searchBar.classList.contains('input-error')) searchBar.classList.remove('input-error')
-    // console.log(searchBar)
-    // console.log(searchBar.value)
     if (!searchBar.value) {
       searchBar.classList.add('input-error')
       searchBar.focus()

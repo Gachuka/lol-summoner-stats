@@ -26,7 +26,9 @@ function MainPage() {
         </div>
 
         <h1 className='main__header'><span>10</span>Latest</h1>
-        <SearchBarComponent />
+        <div className='main__search-bar'>
+          <SearchBarComponent />
+        </div>
       </div>
     </div>
   )
