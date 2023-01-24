@@ -233,8 +233,8 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
                 <ParticipantsComponent 
                   championName={participant.championName}
                   key={participant.puuid}
-                  participantName={participant.summonerName}
-                  summonerName={summonerName}
+                  participantName={participant.summonerName.toLowerCase()}
+                  summonerName={summonerName.toLowerCase()}
                   versionNumber={versionNumber}
                   win={win}
                 />
@@ -247,8 +247,8 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
                 <ParticipantsComponent 
                   championName={participant.championName}
                   key={participant.puuid}
-                  participantName={participant.summonerName}
-                  summonerName={summonerName}
+                  participantName={participant.summonerName.toLowerCase()}
+                  summonerName={summonerName.toLowerCase()}
                   versionNumber={versionNumber}
                   win={win}
                 />
