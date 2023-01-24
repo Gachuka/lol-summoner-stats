@@ -13,7 +13,7 @@ function App() {
       <TopNavComponent />
         <Routes>
           <Route path='/' element={<MainPage />} />
-          <Route path='summoner/:summonerName' element={<SummonerStatComponent/>} />
+          <Route path='/summoner/:summonerName' element={<SummonerStatComponent/>} />
         </Routes>
       </BrowserRouter>
     </div>

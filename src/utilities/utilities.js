@@ -9,7 +9,6 @@ const requestSummonerBySummonerName = 'lol/summoner/v4/summoners/by-name/'
 const requestMatchByPUUIDlol = 'lol/match/v5/matches/by-puuid/'
 const requestMatchByMatchId = 'lol/match/v5/matches/'
 
-
 export const getSummonerByName = (summonerName) => {
   // console.log("getting by name")
   return axios.get(`${apiSummonerUrl}${requestSummonerBySummonerName}${summonerName}?api_key=${API_KEY}`)
