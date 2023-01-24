@@ -21,7 +21,6 @@ function SummonerStatComponent() {
 
   useEffect(() => {
     getSummonerByName(summonerName).then((res) => {
-      console.log(res.data)
       setSummonerData(res.data)
       return getMatchHistoryByPUUID(res.data.puuid)
     }).then((resMatchHistoryByPUUID) => {
@@ -34,8 +33,6 @@ function SummonerStatComponent() {
         }).catch((error) => {console.log(error.message)}))
       }
       Promise.all(promises).then(() => {
-        console.log("done")
-
         // Sort the matches by most recent to least recent
         const sortedMatchHistoryData = [...matchHistoryDataArray].sort((a, b) => {
           return b.gameCreation - a.gameCreation
