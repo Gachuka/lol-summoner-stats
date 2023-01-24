@@ -71,7 +71,7 @@ function SummonerStatComponent() {
               <div className='icon__notch'></div>
               <img 
                 className='icon__image'
-                src={`https://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/profileicon/3379.png`}
+                src={`https://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/profileicon/${summonerData.profileIconId}.png`}
                 alt="profile icon" 
               />
             </div>

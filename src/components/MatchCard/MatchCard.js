@@ -54,7 +54,6 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
 
     for (let i = 0; i < matchData.participants.length; i++) {
       if (matchData.participants[i].summonerName.toLowerCase() === summonerName.toLowerCase()) {
-        console.log(matchData.participants[i])
         setParticipant(matchData.participants[i])
         setWin(matchData.participants[i].win)
         break
