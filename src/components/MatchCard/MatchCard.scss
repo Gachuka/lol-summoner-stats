@@ -45,12 +45,17 @@
 }
 
 .item {
+  border-radius: 4px;
+  overflow: hidden;
+
   &__img {
     height: var(--icon-size-medium);
   }
-  
-  &__filler {
-    opacity: 0;
+  &__win {
+    background-color: var(--win-color-faded);
+  }
+  &__lose {
+    background-color: var(--lose-color-faded);
   }
 }
 
@@ -65,11 +70,7 @@
     gap: inherit;
     display: flex;
   }
-  &__blank {
-    height: var(--icon-size-medium);
-    width: var(--icon-size-medium);
-  }
-  &__filler {
+  &__blank, &__filler {
     height: var(--icon-size-medium);
     width: var(--icon-size-medium);
   }
@@ -84,7 +85,7 @@
     backdrop-filter: blur(3px);
   }
   &--lose {
-    background: var(--lost-color-faded);
+    background: var(--lose-color-faded);
     backdrop-filter: blur(3px);
   }
 }

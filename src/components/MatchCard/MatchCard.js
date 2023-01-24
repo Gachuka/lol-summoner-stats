@@ -198,27 +198,27 @@ function MatchCard({ matchData, summonerName, versionNumber }) {
 
         <div className='items'>
           <div className='items__row'>
-            <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`} alt={`item number ${participant.item0}`}/> : ""}
             </div>
-            <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`} alt={`item number ${participant.item1}`}/> : ""}
             </div>
-            <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`} alt={`item number ${participant.item2}`}/> : ""}
             </div>
-            <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`} alt={`item number ${participant.item6}`}/> : ""}
             </div>
           </div>
           <div className='items__row'>
-            <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`} alt={`item number ${participant.item3}`}/> : ""}
             </div>
-            <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`} alt={`item number ${participant.item4}`}/> : ""}
             </div>
-            <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item`}>
+            <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
               {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`} alt={`item number ${participant.item5}`}/> : ""}
             </div>
             <div className='items__filler'>
