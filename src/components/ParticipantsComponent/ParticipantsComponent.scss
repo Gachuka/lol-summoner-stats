@@ -1,0 +1,45 @@
+.team {
+  --icon-size-small: 16px;
+  display: flex;
+  align-items: center;
+
+  &__name, &__name--player {
+    color: var(--font-color-alt);
+    font-size: 12px;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+    max-width: 90px;
+    white-space: nowrap;
+
+    &--player {
+      color: var(--font-color-main);
+    }
+  }
+
+  &__champion, &__champion--player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #383864;
+    border-radius: 3px;
+    height: var(--icon-size-small);
+    margin-right: 0.5rem;
+    width: var(--icon-size-small);
+    overflow: hidden;
+    &-icon {
+      height: 115%;
+    }
+  }
+}
+
+.player {
+  &-win {
+    border: 1px solid var(--win-color-main);
+    border-radius: 50%;
+  }
+  &-lose {
+    border: 1px solid var(--lose-color-main);
+    border-radius: 50%;
+  }
+}

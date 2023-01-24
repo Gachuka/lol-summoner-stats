@@ -1,0 +1,112 @@
+@use "../../styles/partials/breakpoints" as *;
+
+.icon {
+  border: 2px solid #17172e;
+  border-radius: 4px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  
+  &__image {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+  }
+  &__notch {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    z-index: 1;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 14px;
+    border-radius: 0 0 6px 6px;
+    border: 2px solid #070720;
+    background-color: #06061f;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  &__button {
+    background-color: var(--button-background);
+    border: 2px solid var(--button-border);
+    border-radius: 8px;
+    color: var(--font-color-main);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0 auto;
+    min-width: 80px;
+    padding: 0.5rem 1.25rem;
+    text-align: center;
+  }
+  &__name {
+    font-size: 2.5rem;
+  }
+}
+
+.match-history {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .25rem;
+  margin-top: 2rem;
+}
+
+.navbar {
+  margin-bottom: 2rem;
+}
+
+.profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  &__container {
+    background-color: var(--background-alt);
+    border: 2px solid var(--border-color-main);
+    border-radius: 6px;
+    flex: 0 0 93px;
+    height: 94px;
+    position: relative;
+    width: 94px;
+  }
+  &__level {
+    align-items: center;
+    background-color: #06061f;
+    border: 1px solid #414165;
+    border-radius: 4px;
+    color: #fff;
+    display: flex;
+    font-size: 11px;
+    font-weight: 700;
+    height: 20px;
+    justify-content: center;
+    left: 50%;
+    position: absolute;
+    top: -12px;
+    transform: translateX(-50%);
+    width: 36px;
+    z-index: 2;
+  }
+}
+
+.ssc {
+  color: var(--font-color-main);
+  
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    position: relative;
+    margin-top: 113px;
+
+    @include pretablet {
+      margin-top: 60px;
+    }
+  }
+}

@@ -1,0 +1,263 @@
+import "./MatchCard.scss"
+
+import MatchCardLoading from "../MatchCardLoading/MatchCardLoading"
+import ParticipantsComponent from "../ParticipantsComponent/ParticipantsComponent"
+
+import { useEffect, useState } from "react"
+
+const queueIdData = require('../../data/queue-id-data.json')
+
+function MatchCard({ matchData, summonerName, versionNumber }) {
+
+  // console.log(matchData)
+  
+  const [ participant, setParticipant ] = useState()
+  const [ participantsTeam1, setParticipantsTeam1 ] = useState([])
+  const [ participantsTeam2, setParticipantsTeam2 ] = useState([])
+  const [ queueType, setQueueType ] = useState()
+  const [ win, setWin ] = useState()
+
+  const summonerSpells = {
+    21:"SummonerBarrier",
+    1:"SummonerBoost",
+    14:"SummonerDot",
+    3:"SummonerExhaust",
+    4:"SummonerFlash",
+    6:"SummonerHaste",
+    7:"SummonerHeal",
+    13:"SummonerMana",
+    30:"SummonerPoroRecall",
+    31:"SummonerPoroThrow",
+    11:"SummonerSmite",
+    39:"SummonerSnowURFSnowball_Mark",
+    32:"SummonerSnowball",
+    12:"SummonerTeleport",
+    54:"Summoner_UltBookPlaceholder",
+    55:"Summoner_UltBookSmitePlaceholder"
+  }
+  
+  useEffect(() => {
+
+    if (!matchData) return
+    const team1 = []
+    const team2 = []
+
+    for (let i = 0; i < matchData.participants.length; i++ ) {
+      if (i < 5) {
+        team1.push(matchData.participants[i])
+      } else {
+        team2.push(matchData.participants[i])
+      }
+    }
+    setParticipantsTeam1(team1)
+    setParticipantsTeam2(team2)
+
+    for (let i = 0; i < matchData.participants.length; i++) {
+      if (matchData.participants[i].summonerName.toLowerCase() === summonerName.toLowerCase()) {
+        setParticipant(matchData.participants[i])
+        setWin(matchData.participants[i].win)
+        break
+      }
+    }
+
+    // getQueueIds().then((res) => {
+    //   const queueIds = res.data
+    //   let queueTypeFound
+    //   for (let i = 0; i < res.data.length; i++) {
+    //     if(queueIds[i]["queueId"] === matchData.queueId) {
+    //       queueTypeFound = queueIds[i]["description"]
+    //     }
+    //   }
+
+    //   if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
+    //   else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
+    //   else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
+    //   else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
+    //   else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
+    //   else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
+    //   else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
+    //   else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
+    //   else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
+    //   else setQueueType("Other")
+    // })
+    
+    let queueTypeFound
+    for (let i = 0; i < queueIdData.length; i++) {
+      if(queueIdData[i]["queueId"] === matchData.queueId) {
+        queueTypeFound = queueIdData[i]["description"]
+      }
+    }
+
+    if (queueTypeFound.includes("Ranked")) setQueueType("Ranked")
+    else if (queueTypeFound.includes("Blind")) setQueueType("Normal Blind")
+    else if (queueTypeFound.includes("Custom")) setQueueType("Custom")
+    else if (queueTypeFound.includes("Co-op vs AI")) setQueueType("Co-op vs AI")
+    else if (queueTypeFound.includes("Draft")) setQueueType("Normal Draft")
+    else if (queueTypeFound.includes("ARAM")) setQueueType("ARAM")
+    else if (queueTypeFound.includes("One for All")) setQueueType("One for All")
+    else if (queueTypeFound.includes("Clash")) setQueueType("Clash")
+    else if (queueTypeFound.includes("Ultra Rapid Fire")) setQueueType("URF")
+    else setQueueType("Other")
+  
+  },[matchData, summonerName])
+
+  const convertTime = (seconds) => {
+    const mins = Math.floor(seconds/60)
+    let secs = 0
+    if (seconds%60 < 10 ? secs = "0" + seconds%60 : secs = seconds%60)
+    return `${mins}:${secs}`
+  }
+
+  const timeFromNow = (gameEndTimestamp) => {
+    let outputTime
+    const currentTime = Date.now()
+    const nearestMinute = Math.ceil(((currentTime-gameEndTimestamp)/1000)/60)
+    if (nearestMinute < 60) {
+      outputTime = `${nearestMinute} ${nearestMinute === 1 ? 'minute' : 'minutes'} ago`
+    } else if (nearestMinute >= 60 && nearestMinute < 1440) {
+      const nearestHour = Math.ceil(((currentTime-gameEndTimestamp)/1000)/3600)
+      outputTime = `${nearestHour} ${nearestHour === 1 ? 'hour' : 'hours'} ago`
+    } else {
+      const nearestDay = Math.ceil(((currentTime-gameEndTimestamp)/1000)/86400)
+      outputTime = `${nearestDay} ${nearestDay === 1 ? 'day' : 'days'} ago`
+    }
+    return outputTime
+  }
+
+  const kdaRatio = () => {
+    const kills = participant.kills
+    const deaths = participant.deaths
+    const assists = participant.assists
+    return roundNumber(((kills + assists) / deaths), 2).toFixed(2)
+  }
+
+  const roundNumber = (value, precision) => {
+    let multiplier = Math.pow(10, precision || 0)
+    return Math.round(value * multiplier) / multiplier
+  }
+
+  const csPerMin = () => {
+    const mins = Math.floor(participant.timePlayed/60)
+    return roundNumber((participant.totalMinionsKilled / mins), 1)
+  }
+
+  if (
+    !summonerName ||
+    matchData === undefined ||
+    participantsTeam1.length === 0 || 
+    participantsTeam2.length === 0 || 
+    !participant ||
+    !versionNumber ||
+    !queueType
+    ) {
+
+    // USED TO CHECK WHAT IS MISSING
+    // if (!summonerName) console.log("missing summoner name")
+    // if (matchData === undefined) console.log("missing match data")
+    // if (participantsTeam1.length === 0) console.log("missing participant team 1")
+    // if (participantsTeam2.length === 0) console.log("missing participant team 2")
+    // if (!participant) console.log("missing participant")
+    // if (!versionNumber) console.log("missing version number")
+    // if (!queueType) console.log("missing queue type")
+
+    return (
+      <MatchCardLoading />
+    )
+  }
+
+  return (
+    <div className={`matchCard card ${win ? "matchCard--win" : "matchCard--lose"}`}>
+      <div className='card__container'>
+        <div className='game'>
+          <div className='game__mode'>{queueType}</div>
+          <div className='game__from-now'>{timeFromNow(matchData.gameEndTimestamp)}</div>
+          <div className='game__result result'>
+            <div className={`result__status ${win ? "result__status-win" : "result__status-lose"}`}>{win ? "Win" : "Loss"}</div>
+            <div className='result__time'>{convertTime(participant.timePlayed)}</div>                  
+          </div>
+        </div>
+
+        <div className='played'>
+          <div className='played__champion champion'>
+            <img className='champion__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/champion/${participant.championName}.png`} alt={participant.championName}></img>
+            <div className='champion__level'>{participant.champLevel}</div>
+          </div>
+          <div className='summoner-skill'>
+            <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner1Id]}.png`} alt={`${(summonerSpells[participant.summoner1Id]).slice(8)}`}></img>
+            <img className='summoner-skill__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/spell/${summonerSpells[participant.summoner2Id]}.png`} alt={`${(summonerSpells[participant.summoner2Id]).slice(8)}`}></img>
+          </div>
+        </div>
+        
+        <div className='stats'>
+          <div className="stats__kda-total">{participant.kills} / <span className="stats__kda-total--red">{participant.deaths}</span> / {participant.assists}</div>
+          <div>{kdaRatio()} KDA</div>
+          <div>{participant.totalMinionsKilled} CS ({csPerMin(participant.timePlayed)})</div>
+          <div>{participant.visionScore} vision</div>
+        </div>
+
+        <div className='items'>
+          <div className='items__row'>
+            <div className={`items${participant.item0 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item0 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item0}.png`} alt={`item number ${participant.item0}`}/> : ""}
+            </div>
+            <div className={`items${participant.item1 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item1 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item1}.png`} alt={`item number ${participant.item1}`}/> : ""}
+            </div>
+            <div className={`items${participant.item2 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item2 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item2}.png`} alt={`item number ${participant.item2}`}/> : ""}
+            </div>
+            <div className={`items${participant.item6 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item6 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item6}.png`} alt={`item number ${participant.item6}`}/> : ""}
+            </div>
+          </div>
+          <div className='items__row'>
+            <div className={`items${participant.item3 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item3 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item3}.png`} alt={`item number ${participant.item3}`}/> : ""}
+            </div>
+            <div className={`items${participant.item4 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item4 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item4}.png`} alt={`item number ${participant.item4}`}/> : ""}
+            </div>
+            <div className={`items${participant.item5 === 0 ? "__blank" : "__item"} item ${win ? "item__win" : "item__lose"}`}>
+              {participant.item5 !== 0 ? <img className='item__img' src={`http://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/item/${participant.item5}.png`} alt={`item number ${participant.item5}`}/> : ""}
+            </div>
+            <div className='items__filler'>
+            </div>
+          </div>
+        </div>
+        
+        <div className='teams'>
+          <div className='teams__team'>
+            {participantsTeam1.map((participant) => {
+              return (
+                <ParticipantsComponent 
+                  championName={participant.championName}
+                  key={participant.puuid}
+                  participantName={participant.summonerName.toLowerCase()}
+                  summonerName={summonerName.toLowerCase()}
+                  versionNumber={versionNumber}
+                  win={win}
+                />
+              )
+            })}
+          </div>
+          <div className='teams__team'>
+            {participantsTeam2.map((participant) => {
+              return (
+                <ParticipantsComponent 
+                  championName={participant.championName}
+                  key={participant.puuid}
+                  participantName={participant.summonerName.toLowerCase()}
+                  summonerName={summonerName.toLowerCase()}
+                  versionNumber={versionNumber}
+                  win={win}
+                />
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default MatchCard;
