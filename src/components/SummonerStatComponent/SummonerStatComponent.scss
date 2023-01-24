@@ -1,3 +1,5 @@
+@use "../../styles/partials/breakpoints" as *;
+
 .icon {
   border: 2px solid #17172e;
   border-radius: 4px;
@@ -101,6 +103,10 @@
     flex-direction: column;
     padding: 2rem 1rem;
     position: relative;
-    margin-top: 60px;
+    margin-top: 113px;
+
+    @include pretablet {
+      margin-top: 60px;
+    }
   }
 }
