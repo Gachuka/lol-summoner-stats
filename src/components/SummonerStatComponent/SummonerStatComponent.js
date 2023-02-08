@@ -1,9 +1,4 @@
 import './SummonerStatComponent.scss'
-import {
-  getSummonerByName,
-  getMatchHistoryByPUUID,
-  getMatchByMatchId,
-} from '../../utilities/utilities.js'
 
 import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
@@ -20,29 +15,69 @@ function SummonerStatComponent() {
   const [ matchHistoryList, setMatchHistoryList ] = useState([])
 
   useEffect(() => {
-    getSummonerByName(summonerName).then((res) => {
-      setSummonerData(res.data)
-      return getMatchHistoryByPUUID(res.data.puuid)
-    }).then((resMatchHistoryByPUUID) => {
 
-      const promises = []
-      const matchHistoryDataArray = []
-      for (let i = 0; i < 10; i++) {
-        promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
-          matchHistoryDataArray.push(res.data.info)
-        }).catch((error) => {console.log(error.message)}))
+    async function fetchSummoner() {
+      const getSummonerByName = `/.netlify/functions/getSummonerByName?summonerName=${summonerName}`;
+      const getMatchHistoryByPUUID = `/.netlify/functions/getMatchHistoryByPUUID?PUUID=`;
+      const getMatchByMatchId = `/.netlify/functions/getMatchByMatchId?MatchId=`
+      try {
+        // setLoading(true);
+        const summoner = await fetch(getSummonerByName).then((res) => res.json());
+        console.log(summoner.data)
+        setSummonerData(summoner.data)
+        const fetched = await fetch(`${getMatchHistoryByPUUID}${summoner.data.puuid}`).then((res) => res.json());
+        console.log(fetched.data)
+
+        const promises = []
+        const matchHistoryDataArray = []
+        for (let i = 0; i < 10; i++) {
+          promises.push(
+            fetch(`${getMatchByMatchId}${fetched.data[i]}`).then((res) => res.json())
+            .then((res) => matchHistoryDataArray.push(res.data.info))
+            .catch((error) => {console.log(error.message)})
+          )
+        }
+        Promise.all(promises).then(() => {
+          // Sort the matches by most recent to least recent
+          const sortedMatchHistoryData = [...matchHistoryDataArray].sort((a, b) => {
+            return b.gameCreation - a.gameCreation
+          })
+          setMatchHistoryList(sortedMatchHistoryData)
+        });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        // setLoading(false);
       }
-      Promise.all(promises).then(() => {
-        // Sort the matches by most recent to least recent
-        const sortedMatchHistoryData = [...matchHistoryDataArray].sort((a, b) => {
-          return b.gameCreation - a.gameCreation
-        })
-        setMatchHistoryList(sortedMatchHistoryData)
-      });
+    }
+    fetchSummoner();
 
-    }).catch((error) => {
-      console.log(error.message)
-    })
+    // getSummonerByName(summonerName)
+    // .then((res) => {
+    //   console.log(res.data)
+    //   setSummonerData(res.data)
+    //   return getMatchHistoryByPUUID(res.data.puuid)
+    // })
+    // .then((resMatchHistoryByPUUID) => {
+
+    //   const promises = []
+    //   const matchHistoryDataArray = []
+    //   for (let i = 0; i < 10; i++) {
+    //     promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
+    //       matchHistoryDataArray.push(res.data.info)
+    //     }).catch((error) => {console.log(error.message)}))
+    //   }
+    //   Promise.all(promises).then(() => {
+    //     // Sort the matches by most recent to least recent
+    //     const sortedMatchHistoryData = [...matchHistoryDataArray].sort((a, b) => {
+    //       return b.gameCreation - a.gameCreation
+    //     })
+    //     setMatchHistoryList(sortedMatchHistoryData)
+    //   });
+
+    // }).catch((error) => {
+    //   console.log(error.message)
+    // })
   },[summonerName])
 
   const handleRefresh = () => {
