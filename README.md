@@ -4,6 +4,8 @@
 
 Simply enter the Summoner name into the search bar to view.
 
+[Read more](https://li-yu-development.netlify.app/10Latest) on this project over on my [portfolio](https://li-yu-development.netlify.app/)!!!
+
 ## Tech Stack
 
 **React** with **Javascript**, **HTML**, **SCSS**
