@@ -2,13 +2,18 @@ import './SummonerStatComponent.scss'
 
 import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
+import { 
+  getSummonerByName,
+  getMatchHistoryByPUUID,
+  getMatchByMatchId
+} from '../../utilities/utilities'
 
 import MatchCard from '../MatchCard/MatchCard'
 import BackgroundComponent from '../BackgroundComponent/BackgroundComponent'
 
 function SummonerStatComponent() {
 
-  const versionNumber = "13.1.1"
+  const versionNumber = "13.6.1"
 
   const { summonerName } = useParams()
   const [ summonerData, setSummonerData ] = useState()
@@ -17,22 +22,26 @@ function SummonerStatComponent() {
   useEffect(() => {
 
     async function fetchSummoner() {
-      const getSummonerByName = `/.netlify/functions/getSummonerByName?summonerName=${summonerName}`;
-      const getMatchHistoryByPUUID = `/.netlify/functions/getMatchHistoryByPUUID?PUUID=`;
-      const getMatchByMatchId = `/.netlify/functions/getMatchByMatchId?MatchId=`
+      // const getSummonerByName = `/.netlify/functions/getSummonerByName?summonerName=${summonerName}`;
+      // const getMatchHistoryByPUUID = `/.netlify/functions/getMatchHistoryByPUUID?PUUID=`;
+      // const getMatchByMatchId = `/.netlify/functions/getMatchByMatchId?MatchId=`
+      
       try {
         // setLoading(true);
-        const summoner = await fetch(getSummonerByName).then((res) => res.json());
-        console.log(summoner.data)
+        // const summoner = await fetch(getSummonerByName).then((res) => res.json());
+        const summoner = await getSummonerByName(summonerName);
+        // console.log(summoner.data)
         setSummonerData(summoner.data)
-        const fetched = await fetch(`${getMatchHistoryByPUUID}${summoner.data.puuid}`).then((res) => res.json());
-        console.log(fetched.data)
+        // const fetched = await fetch(`${getMatchHistoryByPUUID}${summoner.data.puuid}`).then((res) => res.json());
+        const fetched = await getMatchHistoryByPUUID(summoner.data.puuid);
+        // console.log(fetched.data)
 
         const promises = []
         const matchHistoryDataArray = []
         for (let i = 0; i < 10; i++) {
           promises.push(
-            fetch(`${getMatchByMatchId}${fetched.data[i]}`).then((res) => res.json())
+            // fetch(`${getMatchByMatchId}${fetched.data[i]}`).then((res) => res.json())
+            getMatchByMatchId(fetched.data[i])
             .then((res) => matchHistoryDataArray.push(res.data.info))
             .catch((error) => {console.log(error.message)})
           )
