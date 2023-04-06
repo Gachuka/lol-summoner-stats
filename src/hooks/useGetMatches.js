@@ -14,6 +14,10 @@ const useGetMatches = (summonerName, setOf10 = 10) => {
     setIsError(false)
     setError({})
 
+    // const getSummonerByName = `/.netlify/functions/getSummonerByName?summonerName=${summonerName}`;
+    // const getMatchHistoryByPUUID = `/.netlify/functions/getMatchHistoryByPUUID?PUUID=`;
+    // const getMatchByMatchId = `/.netlify/functions/getMatchByMatchId?MatchId=`
+
     const controller = new AbortController()
     const { signal } = controller
 
