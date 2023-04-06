@@ -9,7 +9,6 @@ import {useParams} from 'react-router-dom'
 
 import useGetMatches from '../../hooks/useGetMatches'
 
-import MatchCard from '../MatchCard/MatchCard'
 import MatchCardTEST from '../MatchCardTEST/MatchCardTEST'
 import BackgroundComponent from '../BackgroundComponent/BackgroundComponent'
 import MatchCardLoading from '../MatchCardLoading/MatchCardLoading'
@@ -21,7 +20,6 @@ function SummonerStatComponent() {
   const { summonerName } = useParams()
 
   const [ setOf10, setSetOf10 ] = useState(10)
-  const [ somethingElse, setSomethingElse ] = useState(false)
   const {
     isLoading,
     isError,
@@ -41,7 +39,6 @@ function SummonerStatComponent() {
       if (matchCards[0].isIntersecting && hasNextPage) {
         console.log("We are near the last match card!")
         setSetOf10(prev => prev + 10)
-        setSomethingElse(!somethingElse)
       }
     })
 

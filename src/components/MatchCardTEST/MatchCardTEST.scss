@@ -1,10 +1,10 @@
 @use "../../styles/partials/breakpoints" as *;
 
-// .article {
-//   display: flex;
-//   // height: 10rem;
-//   background-color: rgba(0, 0, 0, 0.263);
-// }
+.article {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 
 .champion {
   position: relative;

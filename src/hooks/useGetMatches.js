@@ -58,7 +58,7 @@ const useGetMatches = (summonerName, setOf10 = 10) => {
 
     return () => controller.abort();
 
-  },[setOf10])
+  },[setOf10, summonerName])
 
   return { isLoading, isError, error, results, hasNextPage, summoner }
 }

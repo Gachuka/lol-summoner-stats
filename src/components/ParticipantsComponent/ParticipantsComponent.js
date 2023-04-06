@@ -7,7 +7,7 @@ function ParticipantsComponent({ championName, participantName, summonerName, ve
   const isPlayer = participantName === summonerName
 
   return (
-    <Link to={`/summoner/${participantName}`} className='team'>
+    <Link to={`/summoner/${participantName}`} className='team' reloadDocument>
       <div className={`${isPlayer ? "team__champion--player" : "team__champion"} ${isPlayer ? win ? "player-win" : "player-lose" : ""}`}>
         <img 
           className='team__champion-icon' 
