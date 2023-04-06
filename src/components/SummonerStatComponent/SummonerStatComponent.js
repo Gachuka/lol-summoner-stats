@@ -1,103 +1,101 @@
 import './SummonerStatComponent.scss'
 
-import {useEffect, useState} from 'react'
+import {
+  useState,
+  useRef,
+  useCallback
+} from 'react'
 import {useParams} from 'react-router-dom'
-import { 
-  getSummonerByName,
-  getMatchHistoryByPUUID,
-  getMatchByMatchId
-} from '../../utilities/utilities'
+
+import useGetMatches from '../../hooks/useGetMatches'
 
 import MatchCard from '../MatchCard/MatchCard'
+import MatchCardTEST from '../MatchCardTEST/MatchCardTEST'
 import BackgroundComponent from '../BackgroundComponent/BackgroundComponent'
+import MatchCardLoading from '../MatchCardLoading/MatchCardLoading'
 
 function SummonerStatComponent() {
 
   const versionNumber = "13.6.1"
 
   const { summonerName } = useParams()
-  const [ summonerData, setSummonerData ] = useState()
-  const [ matchHistoryList, setMatchHistoryList ] = useState([])
 
-  useEffect(() => {
+  const [ setOf10, setSetOf10 ] = useState(10)
+  const [ somethingElse, setSomethingElse ] = useState(false)
+  const {
+    isLoading,
+    isError,
+    error,
+    results,
+    hasNextPage,
+    summoner
+  } = useGetMatches(summonerName, setOf10)
 
-    async function fetchSummoner() {
-      // const getSummonerByName = `/.netlify/functions/getSummonerByName?summonerName=${summonerName}`;
-      // const getMatchHistoryByPUUID = `/.netlify/functions/getMatchHistoryByPUUID?PUUID=`;
-      // const getMatchByMatchId = `/.netlify/functions/getMatchByMatchId?MatchId=`
-      
-      try {
-        // setLoading(true);
-        // const summoner = await fetch(getSummonerByName).then((res) => res.json());
-        const summoner = await getSummonerByName(summonerName);
-        // console.log(summoner.data)
-        setSummonerData(summoner.data)
-        // const fetched = await fetch(`${getMatchHistoryByPUUID}${summoner.data.puuid}`).then((res) => res.json());
-        const fetched = await getMatchHistoryByPUUID(summoner.data.puuid);
-        // console.log(fetched.data)
+  const intObserver = useRef()
+  const lastMatchCardRef = useCallback(matchCard => {
+    if (isLoading) return
 
-        const promises = []
-        const matchHistoryDataArray = []
-        for (let i = 0; i < 10; i++) {
-          promises.push(
-            // fetch(`${getMatchByMatchId}${fetched.data[i]}`).then((res) => res.json())
-            getMatchByMatchId(fetched.data[i])
-            .then((res) => matchHistoryDataArray.push(res.data.info))
-            .catch((error) => {console.log(error.message)})
-          )
-        }
-        Promise.all(promises).then(() => {
-          // Sort the matches by most recent to least recent
-          const sortedMatchHistoryData = [...matchHistoryDataArray].sort((a, b) => {
-            return b.gameCreation - a.gameCreation
-          })
-          setMatchHistoryList(sortedMatchHistoryData)
-        });
-      } catch (err) {
-        console.log(err);
-      } finally {
-        // setLoading(false);
+    if (intObserver.current) intObserver.current.disconnect()
+
+    intObserver.current = new IntersectionObserver(matchCards => {
+      if (matchCards[0].isIntersecting && hasNextPage) {
+        console.log("We are near the last match card!")
+        setSetOf10(prev => prev + 10)
+        setSomethingElse(!somethingElse)
       }
-    }
-    fetchSummoner();
+    })
 
-    // getSummonerByName(summonerName)
-    // .then((res) => {
-    //   console.log(res.data)
-    //   setSummonerData(res.data)
-    //   return getMatchHistoryByPUUID(res.data.puuid)
-    // })
-    // .then((resMatchHistoryByPUUID) => {
-
-    //   const promises = []
-    //   const matchHistoryDataArray = []
-    //   for (let i = 0; i < 10; i++) {
-    //     promises.push(getMatchByMatchId(resMatchHistoryByPUUID.data[i]).then((res) => {
-    //       matchHistoryDataArray.push(res.data.info)
-    //     }).catch((error) => {console.log(error.message)}))
-    //   }
-    //   Promise.all(promises).then(() => {
-    //     // Sort the matches by most recent to least recent
-    //     const sortedMatchHistoryData = [...matchHistoryDataArray].sort((a, b) => {
-    //       return b.gameCreation - a.gameCreation
-    //     })
-    //     setMatchHistoryList(sortedMatchHistoryData)
-    //   });
-
-    // }).catch((error) => {
-    //   console.log(error.message)
-    // })
-  },[summonerName])
+    if (matchCard) intObserver.current.observe(matchCard)
+  }, [isLoading, hasNextPage])
 
   const handleRefresh = () => {
     window.location.reload()
   }
+  
+  if (isError) return <p>Error: {error.message}</p>
+  
+  const summonerInfoContent = (
+    summoner &&
+    <div className='ssc__profile profile'>
+      <div className='profile__container'>
+        <div className='profile__level'>{summoner.summonerLevel}</div>
+        <div className="profile__icon icon">
+          <div className='icon__notch'></div>
+          <img 
+            className='icon__image'
+            src={`https://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/profileicon/${summoner.profileIconId}.png`}
+            alt="profile icon" 
+          />
+        </div>
+      </div>
+      <div className='profile__info info'>
+        <span className='info__name'>{summoner['name']}</span>
+      </div>
+    </div>
+  )
 
-  if (!summonerData) {
+  const matchHistoryContent = results.map((match, i) => {
+    if (results.length === i + 1) {
+      return (
+        <MatchCardTEST 
+          ref={lastMatchCardRef}
+          key={match.gameId}
+          matchData={match}
+          summonerName={summonerName}
+          versionNumber={versionNumber}
+        />
+      )
+    }
+
     return (
-      <h1>Loading</h1>
+      <MatchCardTEST 
+        key={match.gameId}
+        matchData={match}
+        summonerName={summonerName}
+        versionNumber={versionNumber}
+      />
     )
-  }
+  })
 
   return (
     <section className='ssc'>
@@ -105,35 +103,12 @@ function SummonerStatComponent() {
         <BackgroundComponent 
           image={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Samira_1.jpg`}
         />
-        <div className='ssc__profile profile'>
-          <div className='profile__container'>
-            <div className='profile__level'>{summonerData.summonerLevel}</div>
-            <div className="profile__icon icon">
-              <div className='icon__notch'></div>
-              <img 
-                className='icon__image'
-                src={`https://ddragon.leagueoflegends.com/cdn/${versionNumber}/img/profileicon/${summonerData.profileIconId}.png`}
-                alt="profile icon" 
-              />
-            </div>
-          </div>
-          <div className='profile__info info'>
-            <span className='info__name'>{summonerData['name']}</span>
-          </div>
-        </div>
+        {summonerInfoContent}
         <button className='info__button' onClick={handleRefresh}>Update</button>
         <div className='match-history'>
-          {matchHistoryList.map((match) => {
-            return (
-              <MatchCard 
-                key={match.gameId}
-                matchData={match}
-                summonerName={summonerName}
-                versionNumber={versionNumber}
-              />
-            )
-          })}
+          {matchHistoryContent}
         </div>
+        {isLoading && <MatchCardLoading />}
       </div>
     </section>
   )

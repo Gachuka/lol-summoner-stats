@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import SearchBarComponent from '../SearchBarComponent/SearchBarComponent'
 
 function TopNavComponent() {
-  
+
   const navigate = useNavigate()
 
   const isSummonerPage = (window.location.href.indexOf('summoner') > -1 ? true : false)

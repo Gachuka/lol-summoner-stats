@@ -19,9 +19,9 @@ export const getSummonerByName = (summonerName) => {
 //   return axios.get(`${apiSummonerUrl}${requestSummonerByPUUID}${summonerPUUID}?api_key=${API_KEY}`)
 // }
 
-export const getMatchHistoryByPUUID = (PUUID) => {
+export const getMatchHistoryByPUUID = (PUUID, setNumber) => {
   // console.log("getting by puuid")
-  return axios.get(`${apiMatchHistoryUrl}${requestMatchByPUUIDlol}${PUUID}/ids?start=0&count=50&api_key=${API_KEY}`)
+  return axios.get(`${apiMatchHistoryUrl}${requestMatchByPUUIDlol}${PUUID}/ids?start=${setNumber - 10}&count=${setNumber}&api_key=${API_KEY}`)
 }
 
 export const getMatchByMatchId = (MatchId) => {

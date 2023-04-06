@@ -1,5 +1,11 @@
 @use "../../styles/partials/breakpoints" as *;
 
+// .article {
+//   display: flex;
+//   // height: 10rem;
+//   background-color: rgba(0, 0, 0, 0.263);
+// }
+
 .champion {
   position: relative;
   height: fit-content;
@@ -16,12 +22,6 @@
     left: 0;
     bottom: 0;
   }
-}
-
-.article {
-  display: flex;
-  justify-content: center;
-  width: 100%;
 }
 
 .card {
@@ -53,6 +53,7 @@
   flex-direction: column;
   justify-content: center;
   width: 7rem;
+  height: 7rem;
   
   &__from-now {
     font-size: .75rem;
@@ -162,6 +163,7 @@
   display: none;
   @include tablet {
     display: flex;
+    align-items: center;
     gap: .25rem;
     &__team {
       flex: 1 1;
